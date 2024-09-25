@@ -45,10 +45,14 @@ export const router = createBrowserRouter([
         index: true,
         element: <Feed />,
       },
-      ...LiftSideLinks.map(({ name }) => ({
-        path: name.toLowerCase(),
-        element: componentMap[name] ? componentMap[name]() : null,
-      })),
+      // ...LiftSideLinks.map(({ name }) => ({
+      //   path: name.toLowerCase(),
+      //   element: componentMap[name] ? componentMap[name]() : null,
+      // })),
+      {
+        path: "setting",
+        element: <Setting />,
+      },
     ],
   },
   {
