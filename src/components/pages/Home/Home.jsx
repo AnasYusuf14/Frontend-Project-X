@@ -8,7 +8,7 @@ const Home = () => {
       <LeftSidebar />
       <div className="flex-1 flex flex-col lg:flex-row">
         <Outlet />
-        <RightSidebar />
+        {/* <RightSidebar /> */}
       </div>
     </div>
   );
