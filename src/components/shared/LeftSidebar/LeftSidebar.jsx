@@ -7,16 +7,31 @@ const LeftSidebar = () => {
       <div className="space-y-1">
         <button className="text-3xl">X</button>
         <div className="space-y-1">
-          {LiftSideLinks.map(({ name, iconName: Icon }, index) => (
-            <Link
-              key={index}
-              to={name}
-              className="flex items-center space-x-3 p-3"
-            >
-              <Icon className="text-2xl" />
-              <span className="text-xl font-semibold">{name}</span>
-            </Link>
-          ))}
+          {LiftSideLinks.map(({ name, iconName: Icon }, index) => {
+            if (name === "setting/account") {
+              return (
+                <Link
+                  key={index}
+                  to={name}
+                  className="flex items-center space-x-3 p-3"
+                >
+                  <Icon className="text-2xl" />
+                  <span className="text-xl font-semibold">Settings</span>
+                </Link>
+              );
+            } else {
+              return (
+                <Link
+                  key={index}
+                  to={name}
+                  className="flex items-center space-x-3 p-3"
+                >
+                  <Icon className="text-2xl" />
+                  <span className="text-xl font-semibold">{name}</span>
+                </Link>
+              );
+            }
+          })}
         </div>
         <button className="w-full bg-[#1d9bf0] text-white py-4 px-5 rounded-full">
           Post

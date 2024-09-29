@@ -2,15 +2,62 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import { FiArrowUpRight } from "react-icons/fi";
 import SettingListItem from "./SettingListItem";
 import { IoSearch } from "react-icons/io5";
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 
 export default function Setting() {
   const [selectedItem, setSelectedItem] = useState("Your Account");
+  const navigate = useNavigate();
+
+  const handleNavigation = (item, path) => {
+    setSelectedItem(item);
+    navigate(path);
+  };
+
+  useEffect(() => {
+    const pathMap = {
+      "/setting": { path: "/setting/account", item: "Your Account" },
+      "/setting/account": { path: "/setting/account", item: "Your Account" },
+      "/setting/monetization": {
+        path: "/setting/monetization",
+        item: "Monetization",
+      },
+      "/setting/manage_subscriptions": {
+        path: "/setting/manage_subscriptions",
+        item: "Creator Subscriptions",
+      },
+      "/setting/security_and_account_access": {
+        path: "/setting/security_and_account_access",
+        item: "Security and account access",
+      },
+      "/setting/privacy_and_safety": {
+        path: "/setting/privacy_and_safety",
+        item: "Privacy and safety",
+      },
+      "/setting/notifications": {
+        path: "/setting/notifications",
+        item: "Notifications",
+      },
+      "/setting/accessibility_display_and_languages": {
+        path: "/setting/accessibility_display_and_languages",
+        item: "Accessibility, display, and languages",
+      },
+      "/setting/additional_resources": {
+        path: "/setting/additional_resources",
+        item: "Additional resources",
+      },
+    };
+
+    const currentPath = window.location.pathname;
+    if (pathMap[currentPath]) {
+      setSelectedItem(pathMap[currentPath].item);
+      navigate(pathMap[currentPath].path);
+    }
+  }, [navigate]);
 
   return (
-    <div className="flex flex-col gap-2 lg:flex-row">
-      <div className="flex-1 w-full h-full flex flex-col gap-2 max-w-[900px]">
+    <div className="flex flex-col gap-2 md:flex-row">
+      <div className="grow w-full h-full flex flex-col gap-2 min-w-[450px] max-w-[800px]">
         <h1 className="mx-2 my-3 text-2xl font-bold">Settings</h1>
         <div className="flex flex-col gap-2">
           <div className="relative flex items-center">
@@ -25,54 +72,78 @@ export default function Setting() {
             title="Your Account"
             icon={<MdKeyboardArrowRight />}
             isActive={selectedItem === "Your Account"}
-            onClick={() => {
-              setSelectedItem("Your Account");
-              console.log(selectedItem);
-            }}
+            onClick={() => handleNavigation("Your Account", "/setting/account")}
           />
           <SettingListItem
             title="Monetization"
             icon={<MdKeyboardArrowRight />}
             isActive={selectedItem === "Monetization"}
-            onClick={() => setSelectedItem("Monetization")}
+            onClick={() =>
+              handleNavigation("Monetization", "/setting/monetization")
+            }
           />
           <SettingListItem
             title="Creator Subscriptions"
             icon={<MdKeyboardArrowRight />}
             isActive={selectedItem === "Creator Subscriptions"}
-            onClick={() => setSelectedItem("Creator Subscriptions")}
+            onClick={() =>
+              handleNavigation(
+                "Creator Subscriptions",
+                "/setting/manage_subscriptions"
+              )
+            }
           />
           <SettingListItem
             title="Security and account access"
             icon={<MdKeyboardArrowRight />}
             isActive={selectedItem === "Security and account access"}
-            onClick={() => setSelectedItem("Security and account access")}
+            onClick={() =>
+              handleNavigation(
+                "Security and account access",
+                "/setting/security_and_account_access"
+              )
+            }
           />
           <SettingListItem
             title="Privacy and safety"
             icon={<MdKeyboardArrowRight />}
             isActive={selectedItem === "Privacy and safety"}
-            onClick={() => setSelectedItem("Privacy and safety")}
+            onClick={() =>
+              handleNavigation(
+                "Privacy and safety",
+                "/setting/privacy_and_safety"
+              )
+            }
           />
           <SettingListItem
             title="Notifications"
             icon={<MdKeyboardArrowRight />}
             isActive={selectedItem === "Notifications"}
-            onClick={() => setSelectedItem("Notifications")}
+            onClick={() =>
+              handleNavigation("Notifications", "/setting/notifications")
+            }
           />
           <SettingListItem
             title="Accessibility, display, and languages"
             icon={<MdKeyboardArrowRight />}
             isActive={selectedItem === "Accessibility, display, and languages"}
             onClick={() =>
-              setSelectedItem("Accessibility, display, and languages")
+              handleNavigation(
+                "Accessibility, display, and languages",
+                "/setting/accessibility_display_and_languages"
+              )
             }
           />
           <SettingListItem
             title="Additional resources"
             icon={<MdKeyboardArrowRight />}
             isActive={selectedItem === "Additional resources"}
-            onClick={() => setSelectedItem("Additional resources")}
+            onClick={() =>
+              handleNavigation(
+                "Additional resources",
+                "/setting/additional_resources"
+              )
+            }
           />
           <SettingListItem
             title="Help Center"
@@ -88,7 +159,7 @@ export default function Setting() {
           />
         </div>
       </div>
-      <Outlet className="flex-1" />
+      <Outlet className="grow min-w-[600px]" />
     </div>
   );
 }

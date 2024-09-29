@@ -1,7 +1,7 @@
 // import { MdKeyboardArrowRight } from "react-icons/md";
 import PropTypes from "prop-types";
 
-const SettingListItem = ({ title, icon, isActive, onClick }) => {
+const SettingListItem = ({ title, icon, isActive = false, onClick }) => {
   return (
     <li
       className={`flex justify-between items-center p-3 ${isActive ? "border-r-4 border-blue-500 bg-gray-900 cursor-pointer" : "cursor-pointer hover:bg-gray-900"}`}

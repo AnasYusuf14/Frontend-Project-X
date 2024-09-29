@@ -11,12 +11,11 @@ import Gork from "./components/shared/Gork/Gork";
 import Jobs from "./components/shared/Jobs/Jobs";
 import Lists from "./components/shared/Lists/Lists";
 import Messages from "./components/shared/Messages/Messages";
-import Monetization from "./components/shared/Monetization/Monetization";
 import Notifications from "./components/shared/Notifications/Notifications";
 import Premium from "./components/shared/Premium/Premium";
 import Profile from "./components/shared/Profile/Profile";
-import Setting from "./components/shared/Setting/Setting";
 import { LiftSideLinks } from "./assets/LiftSideLinks/index";
+import Setting from "./components/shared/Setting/Setting.jsx";
 import AccountListSettings from "./components/shared/Setting/account/AccountSettingsList";
 import Account from "./components/shared/Setting/account/Account";
 import Password from "./components/shared/Setting/account/password/Password";
@@ -38,6 +37,20 @@ import Accessibility from "./components/shared/Setting/display_and_language/acce
 import DataUsage from "./components/shared/Setting/display_and_language/data_usage/DataUsage";
 import Display from "./components/shared/Setting/display_and_language/display/Display";
 import Languages from "./components/shared/Setting/display_and_language/languages/Languages";
+import AccountInformation from "./components/shared/Setting/account/account_information/AccountInformation";
+import Grok from "./components/shared/Setting/privacy_and_safety/grok/Grok";
+import LocationInformation from "./components/shared/Setting/privacy_and_safety/location_information/LocationInformation";
+import DataSharingWithBusinessPartners from "./components/shared/Setting/privacy_and_safety/data_sharing_with_business_partners/DataSharingWithBusinessPartners";
+import InferredIdentity from "./components/shared/Setting/privacy_and_safety/inferred_identity/InferredIdentity";
+import AdsPreferences from "./components/shared/Setting/privacy_and_safety/ads_preferences/AdsPreferences";
+import DiscoverabilityAndContacts from "./components/shared/Setting/privacy_and_safety/discoverability_and_contacts/DiscoverabilityAndContacts";
+import Spaces from "./components/shared/Setting/privacy_and_safety/spaces/Spaces";
+import DirectMessages from "./components/shared/Setting/privacy_and_safety/direct_messages/DirectMessages";
+import MuteAndBlock from "./components/shared/Setting/privacy_and_safety/mute_and_block/MuteAndBlock";
+import ContentYouSee from "./components/shared/Setting/privacy_and_safety/content_you_see/ContentYouSee";
+import YourPosts from "./components/shared/Setting/privacy_and_safety/your_posts/YourPosts";
+import AudienceMediaTagging from "./components/shared/Setting/privacy_and_safety/audience_media_tagging/AudienceMediaTagging";
+import Monetization from "./components/shared/Setting/monetization/Monetization";
 const componentMap = {
   Feed,
   Explore,
@@ -52,9 +65,8 @@ const componentMap = {
   Ads,
   Jobs,
   Create,
-  Setting,
   Bookmarks,
-  Gork,
+  Gork, // Commented out as it is not defined
 };
 
 export const router = createBrowserRouter([
@@ -66,10 +78,10 @@ export const router = createBrowserRouter([
         index: true,
         element: <Feed />,
       },
-      // ...LiftSideLinks.map(({ name }) => ({
-      //   path: name.toLowerCase(),
-      //   element: componentMap[name] ? componentMap[name]() : null,
-      // })),
+      ...LiftSideLinks.map(({ name }) => ({
+        path: name.toLowerCase(),
+        element: componentMap[name] ? componentMap[name]() : null,
+      })),
       {
         path: "setting",
         element: <Setting />,
@@ -81,6 +93,10 @@ export const router = createBrowserRouter([
               {
                 index: true,
                 element: <AccountListSettings />,
+              },
+              {
+                path: "your_twitter_data",
+                element: <AccountInformation />,
               },
               {
                 path: "change_passwords",
@@ -137,6 +153,54 @@ export const router = createBrowserRouter([
               {
                 index: true,
                 element: <PrivacyAndSafetyList />,
+              },
+              {
+                path: "audience_media_tagging",
+                element: <AudienceMediaTagging />, // Create this component
+              },
+              {
+                path: "your_posts",
+                element: <YourPosts />, // Create this component
+              },
+              {
+                path: "content_you_see",
+                element: <ContentYouSee />, // Create this component
+              },
+              {
+                path: "mute_and_block",
+                element: <MuteAndBlock />, // Create this component
+              },
+              {
+                path: "direct_messages",
+                element: <DirectMessages />, // Create this component
+              },
+              {
+                path: "spaces",
+                element: <Spaces />, // Create this component
+              },
+              {
+                path: "discoverability-and-contacts",
+                element: <DiscoverabilityAndContacts />,
+              },
+              {
+                path: "ads_preferences",
+                element: <AdsPreferences />, // Create this component
+              },
+              {
+                path: "inferred_identity",
+                element: <InferredIdentity />, // Create this component
+              },
+              {
+                path: "data_sharing_with_business_partners",
+                element: <DataSharingWithBusinessPartners />, // Create this component
+              },
+              {
+                path: "location_information",
+                element: <LocationInformation />, // Create this component
+              },
+              {
+                path: "grok",
+                element: <Grok />, // Create this component
               },
             ],
           },

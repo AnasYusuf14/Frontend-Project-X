@@ -15,68 +15,68 @@ import { RiSpaceShipLine } from "react-icons/ri";
 import { MdElectricBolt } from "react-icons/md";
 import { CiSettings } from "react-icons/ci";
 export const LiftSideLinks = [
-    {
-        name: "Feed",
-        iconName: MdHomeFilled,
-    },
-    {
-        name: "Explore",
-        iconName: IoIosSearch,
-    },
-    {
-        name: "Notifications",
-        iconName: RiNotification2Line,
-    },
-    {
-        name: "Messages",
-        iconName: MdOutlineMail,
-    },
-    {
-        name: "Gork",
-        iconName: BiSquare,
-    },
-    {
-        name: "Profile",
-        iconName: CiUser,
-    },
-    {
-        name: "Lists",
-        iconName: MdOutlineFeaturedPlayList,
-    },
-    {
-        name: "Premium",
-        iconName: MdElectricBolt,
-    },
-    {
-        name: "Bookmarks",
-        iconName: CiBookmark,
-    },
-    {
-        name: "Communities",
-        iconName: RiGroupLine,
-    },
-    {
-        name: "Monetization",
-        iconName: FaMoneyBillWave,
-    },
-    {
-        name: "Business",
-        iconName: SlEnergy,
-    },
-    {
-        name: "Ads",
-        iconName: SiSpreadshirt,
-    },
-    {
-        name: "Jobs",
-        iconName: PiBagSimpleFill,
-    },
-    {
-        name: "Create",
-        iconName: RiSpaceShipLine,
-    },
-    {
-        name: "Setting",
-        iconName: CiSettings,
-    },
-]
+  {
+    name: "Feed",
+    iconName: MdHomeFilled,
+  },
+  {
+    name: "Explore",
+    iconName: IoIosSearch,
+  },
+  {
+    name: "Notifications",
+    iconName: RiNotification2Line,
+  },
+  {
+    name: "Messages",
+    iconName: MdOutlineMail,
+  },
+  {
+    name: "Gork",
+    iconName: BiSquare,
+  },
+  {
+    name: "Profile",
+    iconName: CiUser,
+  },
+  {
+    name: "Lists",
+    iconName: MdOutlineFeaturedPlayList,
+  },
+  {
+    name: "Premium",
+    iconName: MdElectricBolt,
+  },
+  {
+    name: "Bookmarks",
+    iconName: CiBookmark,
+  },
+  {
+    name: "Communities",
+    iconName: RiGroupLine,
+  },
+  {
+    name: "Monetization",
+    iconName: FaMoneyBillWave,
+  },
+  {
+    name: "Business",
+    iconName: SlEnergy,
+  },
+  {
+    name: "Ads",
+    iconName: SiSpreadshirt,
+  },
+  {
+    name: "Jobs",
+    iconName: PiBagSimpleFill,
+  },
+  {
+    name: "Create",
+    iconName: RiSpaceShipLine,
+  },
+  {
+    name: "setting/account",
+    iconName: CiSettings,
+  },
+];
