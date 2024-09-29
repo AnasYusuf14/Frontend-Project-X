@@ -1,36 +1,19 @@
+import Post from "./Porst/Post";
+import Posts from "./Posts/Posts";
 const Feed = () => {
   return (
-    <div className="flex-1 border border-[#2f3336] text-white p-4">
-      {/* What's Happening Section */}
-      <div className="mb-4">
-        <input
-          type="text"
-          placeholder="What is happening?!"
-          className="w-full p-3 rounded-lg bg-[#202327] text-white"
-        />
-        <div className="flex justify-between mt-2">
-          <div className="space-x-2">
-            {/* Icons like image, emoji */}
-            <button>📷</button>
-            <button>😊</button>
-            <button>📍</button>
-          </div>
-          <button className="bg-blue-600 px-4 py-2 rounded-lg">Post</button>
-        </div>
+    <div className="flex-1 text-white pb-4">
+      <div className="flex text-center">
+        <button className="flex-[.5] p-5 hover:bg-[#333] transition 	">
+          For You
+        </button>
+        <button className="flex-[.5] p-5 hover:bg-[#333] transition 	">
+          Following
+        </button>
       </div>
-
-      {/* Tweets Section */}
-      <div className="space-y-4">
-        <div className="bg-[#202327] p-4 rounded-lg">
-          <h3 className="font-bold">@vidsthatgohard</h3>
-          <p>Michael finally got his boat 11 years later!</p>
-          <img
-            src="https://placekitten.com/500/300"
-            alt="Tweet Image"
-            className="rounded-lg mt-2"
-          />
-        </div>
-        {/* Add more posts */}
+      <Post />
+      <div className="space-y-4 p-4">
+        <Posts />
       </div>
     </div>
   );
