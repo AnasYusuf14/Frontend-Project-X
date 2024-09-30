@@ -2,12 +2,14 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import { FiArrowUpRight } from "react-icons/fi";
 import SettingListItem from "./SettingListItem";
 import { IoSearch } from "react-icons/io5";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import { SidebarContext } from "../../../SidebarContext";
 
 export default function Setting() {
   const [selectedItem, setSelectedItem] = useState("Your Account");
   const navigate = useNavigate();
+  const { closeRightSidebar } = useContext(SidebarContext);
 
   const handleNavigation = (item, path) => {
     setSelectedItem(item);
@@ -54,6 +56,10 @@ export default function Setting() {
       navigate(pathMap[currentPath].path);
     }
   }, [navigate]);
+
+  useEffect(() => {
+    closeRightSidebar();
+  }, [closeRightSidebar]);
 
   return (
     <div className="flex flex-col gap-2 md:flex-row">

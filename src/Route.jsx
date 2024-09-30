@@ -51,6 +51,7 @@ import ContentYouSee from "./components/shared/Setting/privacy_and_safety/conten
 import YourPosts from "./components/shared/Setting/privacy_and_safety/your_posts/YourPosts";
 import AudienceMediaTagging from "./components/shared/Setting/privacy_and_safety/audience_media_tagging/AudienceMediaTagging";
 import Monetization from "./components/shared/Setting/monetization/Monetization";
+import NotificationsList from "./components/shared/Setting/notifications/NotificationsList.jsx";
 const componentMap = {
   Feed,
   Explore,
@@ -206,7 +207,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "notifications",
-            element: <Notifications />,
+            element: <NotificationsList />,
           },
           {
             path: "accessibility_display_and_languages",

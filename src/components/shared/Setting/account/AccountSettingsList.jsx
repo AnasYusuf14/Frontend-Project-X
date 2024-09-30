@@ -9,6 +9,10 @@ const AccountSettingsList = () => {
   return (
     <div className="w-full h-full flex flex-col gap-2">
       <h1 className="mx-2 my-3 text-2xl font-bold">Account</h1>
+      <p className="mx-2  text-sm text-gray-500">
+        See information about your account, download an archive of your data, or
+        learn about your account deactivation options
+      </p>
       <div className="flex flex-col gap-2">
         <NestedListsItem
           title="Account information"

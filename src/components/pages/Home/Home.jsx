@@ -1,8 +1,11 @@
 import { Outlet } from "react-router-dom";
 import LeftSidebar from "../../shared/LeftSidebar/LeftSidebar";
 import RightSidebar from "../../shared/RightSidebar/RightSidebar";
+import React, { useContext } from "react";
+import { SidebarContext } from "../../../SidebarContext";
 
 const Home = () => {
+  const { isSidebarVisible } = useContext(SidebarContext);
   return (
     <div className="flex min-h-screen bg-black text-white mx-auto max-w-7xl">
       <LeftSidebar />
@@ -10,7 +13,7 @@ const Home = () => {
         <div className="flex-1 border border-[#2f3336]">
           <Outlet />
         </div>
-        <RightSidebar />
+        {isSidebarVisible && <RightSidebar />}
       </div>
     </div>
   );

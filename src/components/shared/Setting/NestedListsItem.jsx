@@ -12,7 +12,9 @@ const NestedListsItem = ({ title, description, icon, onClick }) => {
         {icon}
         <div className="flex flex-col gap-1">
           <span>{title}</span>
-          <span className="text-gray-500 text-sm">{description}</span>
+          {description && (
+            <span className="text-gray-500 text-sm">{description}</span>
+          )}
         </div>
       </div>
       <MdKeyboardArrowRight className=" text-3xl text-gray-500" />
@@ -23,7 +25,7 @@ const NestedListsItem = ({ title, description, icon, onClick }) => {
 NestedListsItem.propTypes = {
   title: PropTypes.string.isRequired,
   icon: PropTypes.element.isRequired,
-  description: PropTypes.string.isRequired,
+  description: PropTypes.string,
   onClick: PropTypes.func.isRequired,
 };
 
