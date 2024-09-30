@@ -15,8 +15,6 @@ import Notifications from "./components/shared/Notifications/Notifications";
 import Premium from "./components/shared/Premium/Premium";
 import Profile from "./components/shared/Profile/Profile";
 import { LiftSideLinks } from "./assets/LiftSideLinks/index";
-<<<<<<< HEAD
-=======
 import Setting from "./components/shared/Setting/Setting.jsx";
 import AccountListSettings from "./components/shared/Setting/account/AccountSettingsList";
 import Account from "./components/shared/Setting/account/Account";
@@ -53,7 +51,6 @@ import ContentYouSee from "./components/shared/Setting/privacy_and_safety/conten
 import YourPosts from "./components/shared/Setting/privacy_and_safety/your_posts/YourPosts";
 import AudienceMediaTagging from "./components/shared/Setting/privacy_and_safety/audience_media_tagging/AudienceMediaTagging";
 import Monetization from "./components/shared/Setting/monetization/Monetization";
->>>>>>> 328659f4e79469460215f0a183dfb829491dcbb4
 const componentMap = {
   Feed,
   Explore,
@@ -85,8 +82,6 @@ export const router = createBrowserRouter([
         path: name.toLowerCase(),
         element: componentMap[name] ? componentMap[name]() : null,
       })),
-<<<<<<< HEAD
-=======
       {
         path: "setting",
         element: <Setting />,
@@ -245,7 +240,6 @@ export const router = createBrowserRouter([
           },
         ],
       },
->>>>>>> 328659f4e79469460215f0a183dfb829491dcbb4
     ],
   },
   {

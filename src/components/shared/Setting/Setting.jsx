@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-const Setting = () => {
-  return <div>Setting</div>;
-};
-
-export default Setting;
-=======
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { FiArrowUpRight } from "react-icons/fi";
 import SettingListItem from "./SettingListItem";
@@ -170,4 +163,3 @@ export default function Setting() {
     </div>
   );
 }
->>>>>>> 328659f4e79469460215f0a183dfb829491dcbb4
