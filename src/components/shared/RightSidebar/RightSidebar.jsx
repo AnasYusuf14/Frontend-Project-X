@@ -2,8 +2,8 @@ import React from "react";
 
 const RightSidebar = () => {
   return (
-    <div className=" text-white p-4 rounded-lg shadow-lg max-w-xs">
-      <div className="mb-6">
+    <div className="hidden lg:block text-white p-4 rounded-lg shadow-lg">
+      <div className="mb-6 border border-[#2f3336] rounded-[30px] p-4">
         <h3 className="text-lg font-semibold mb-4">Trends for you</h3>
         <ul className="space-y-4">
           {[
@@ -29,7 +29,7 @@ const RightSidebar = () => {
         </ul>
         <p className="text-blue-400 text-sm mt-4 cursor-pointer">Show more</p>
       </div>
-      <div>
+      <div className=" border border-[#2f3336] rounded-[30px] p-4">
         <h3 className="text-lg font-semibold mb-4">Who to follow</h3>
         <ul className="space-y-4">
           {[

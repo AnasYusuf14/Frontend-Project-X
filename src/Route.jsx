@@ -52,6 +52,7 @@ import YourPosts from "./components/shared/Setting/privacy_and_safety/your_posts
 import AudienceMediaTagging from "./components/shared/Setting/privacy_and_safety/audience_media_tagging/AudienceMediaTagging";
 import Monetization from "./components/shared/Setting/monetization/Monetization";
 import NotificationsList from "./components/shared/Setting/notifications/NotificationsList.jsx";
+import { PostsLoder } from "./utils/postsLoder.js";
 const componentMap = {
   Feed,
   Explore,
@@ -82,6 +83,9 @@ export const router = createBrowserRouter([
       ...LiftSideLinks.map(({ name }) => ({
         path: name.toLowerCase(),
         element: componentMap[name] ? componentMap[name]() : null,
+        // loader: () => {
+        //   return PostsLoder();
+        // },
       })),
       {
         path: "setting",

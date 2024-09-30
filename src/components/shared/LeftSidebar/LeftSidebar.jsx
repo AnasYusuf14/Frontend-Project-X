@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { LiftSideLinks } from "../../../assets/LiftSideLinks/index";
 const LeftSidebar = () => {
   return (
-    <div className="w-64 text-white h-screen flex flex-col justify-between p-4">
+    <div className="text-white h-screen flex flex-col justify-between p-4 text-center xl:text-start">
       <div className="space-y-1">
         <button className="text-3xl">X</button>
         <div className="space-y-1">
@@ -13,10 +13,12 @@ const LeftSidebar = () => {
                 <Link
                   key={index}
                   to={name}
-                  className="flex items-center space-x-3 p-3"
+                  className="flex items-center space-x-3 p-3 justify-center xl:justify-normal"
                 >
                   <Icon className="text-2xl" />
-                  <span className="text-xl font-semibold">Settings</span>
+                  <span className="hidden xl:block text-xl font-semibold">
+                    Settings
+                  </span>
                 </Link>
               );
             } else {
@@ -24,28 +26,30 @@ const LeftSidebar = () => {
                 <Link
                   key={index}
                   to={name}
-                  className="flex items-center space-x-3 p-3"
+                  className="flex items-center space-x-3 p-3 justify-center xl:justify-normal	"
                 >
                   <Icon className="text-2xl" />
-                  <span className="text-xl font-semibold">{name}</span>
+                  <p className="hidden xl:block text-xl font-semibold">
+                    {name}
+                  </p>
                 </Link>
               );
             }
           })}
         </div>
-        <button className="w-full bg-[#1d9bf0] text-white py-4 px-5 rounded-full">
+        <button className="hidden xl:block w-full bg-[#1d9bf0] text-white py-4 px-5 rounded-full">
           Post
         </button>
       </div>
-      <div className="flex items-center justify-between">
-        <div className="flex items-center">
-          <div className="bg-red-300 rounded-full h-[50px] w-[50px] me-2"></div>
+      <div className="flex items-center justify-between mx-auto mt-3">
+        <div className="flex items-center ">
+          <div className="bg-red-300 rounded-full h-[50px] w-[50px] xl:me-2"></div>
           <div>
-            <p>abd ayman</p>
-            <p className="text-[#71767b] text-xs">@ggooggoo</p>
+            <p className="hidden xl:block">abd ayman</p>
+            <p className="hidden xl:block text-[#71767b] text-xs">@ggooggoo</p>
           </div>
         </div>
-        <MdOutlineMoreHoriz className="pointer" />
+        <MdOutlineMoreHoriz className="hidden xl:block pointer" />
       </div>
     </div>
   );

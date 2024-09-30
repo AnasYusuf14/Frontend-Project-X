@@ -1,7 +1,7 @@
 import React from "react";
 import { FaSpider, FaRetweet, FaHeart, FaComment, FaEye } from "react-icons/fa"; // Importing icons
 
-const TweetCard = () => {
+const TweetCard = ({ post }) => {
   return (
     <div className=" mx-auto text-white rounded-lg shadow-lg">
       <div className="flex items-center mb-4">
