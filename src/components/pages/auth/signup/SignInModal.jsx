@@ -1,4 +1,3 @@
-// src/components/pages/auth/signup/SignInModal.jsx
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
@@ -42,8 +41,10 @@ const SignInModal = ({ isOpen, onClose, formData, handleInputChange }) => {
       }
       const user = data[0];
       toast.success("Signed in successfully");
+      localStorage.setItem("authToken", "mockToken");
+      localStorage.setItem("userProfile", JSON.stringify(user)); // Store the user profile in localStorage
       dispatch(setAuthenticated(true));
-      dispatch(setUser(user)); // Dispatch setUser action
+      dispatch(setUser(user));
       navigate("/");
       onClose();
     } catch (error) {

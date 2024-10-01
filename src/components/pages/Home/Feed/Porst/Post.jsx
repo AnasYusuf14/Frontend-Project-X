@@ -4,11 +4,12 @@ import { MdOutlineChecklist } from "react-icons/md";
 import { CiFaceSmile } from "react-icons/ci";
 import { CiCalendarDate } from "react-icons/ci";
 import { IoLocationOutline } from "react-icons/io5";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addPost } from "@/assets/rtk/features/postSlice";
 import { useTranslation } from "react-i18next";
 import ReactPlayer from "react-player/youtube";
+
 const Post = () => {
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
@@ -20,8 +21,8 @@ const Post = () => {
   const [textarea, setTextarea] = useState("");
   const [tweet, setTweet] = useState({
     id: `${Math.random().toString(36).substr(2, 9)}`,
-    userName: user.name,
-    user: user.username,
+    userName: user?.name || "Unknown",
+    user: user?.username || "Unknown",
     userImg: "/images/images.jpeg",
     postTime: "0s",
     postContent: textarea,
@@ -34,6 +35,17 @@ const Post = () => {
     hash: "",
     replies: [],
   });
+
+  useEffect(() => {
+    if (user) {
+      setTweet((prevTweet) => ({
+        ...prevTweet,
+        userName: user.name,
+        user: user.username,
+      }));
+    }
+  }, [user]);
+
   const postValidation = (e) => {
     const input = e.target.value.trim();
     const hashtags = (input.match(/#\w+/g) || []).map((tag) => tag.slice(1));
@@ -51,6 +63,7 @@ const Post = () => {
       setOpacity(false);
     }
   };
+
   const handleChange = (e) => {
     const image = e.target.files[0];
     if (image === "" || image === undefined) {
@@ -63,6 +76,7 @@ const Post = () => {
       }));
     }
   };
+
   const handleDate = () => {
     const options = {
       hour: "numeric",
@@ -75,6 +89,7 @@ const Post = () => {
     const formattedTime = now.toLocaleString("en-US", options);
     setCurrentTime(formattedTime);
   };
+
   const reset = () => {
     setTextarea("");
     setImageSrc("");
@@ -86,13 +101,16 @@ const Post = () => {
       postImg: ``,
     }));
   };
+
   const handelPost = () => {
     if (opacity) {
       dispatch(addPost(tweet));
       reset();
     }
   };
+
   const { t } = useTranslation();
+
   return (
     <div className="mb-4 border-b border-[#2f3336] p-4">
       <div className="flex items-start">
@@ -109,8 +127,8 @@ const Post = () => {
           rows="4"
           value={textarea}
           onChange={(e) => {
-            const vlaue = e.target.value;
-            setTextarea(vlaue);
+            const value = e.target.value;
+            setTextarea(value);
             postValidation(e);
           }}
         />
@@ -134,8 +152,8 @@ const Post = () => {
               type="url"
               required
               placeholder="https://example.com"
-              className="outline-none w-full bg-inherit	"
-              vlaue=""
+              className="outline-none w-full bg-inherit"
+              value={url}
               onChange={(e) => {
                 const value = e.target.value;
                 setUrl(value);
@@ -172,8 +190,8 @@ const Post = () => {
           className={`bg-[#1d9bf0] px-4 py-2 rounded-full ${
             opacity ? "opacity-100" : "opacity-50"
           }`}
-          disabled={opacity ? false : true}
-          onClick={() => handelPost()}
+          disabled={!opacity}
+          onClick={handelPost}
         >
           Post
         </button>
@@ -181,4 +199,5 @@ const Post = () => {
     </div>
   );
 };
+
 export default Post;

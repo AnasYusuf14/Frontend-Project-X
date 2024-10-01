@@ -1,27 +1,31 @@
 import { RouterProvider } from "react-router-dom";
 import { router } from "./Route";
 import { SidebarProvider } from "./SidebarContext";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setAuthenticated, setUser } from "./assets/rtk/features/authSlice";
 
-// Create a client
-const queryClient = new QueryClient();
 const App = () => {
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   ourAuth.onAuthStateChanged((authUser) => {
-  //     if (authUser) {
-  //       dispatch(authUser);
-  //     } else {
-  //       dispatch(null);
-  //     }
-  //   });
-  // }, []);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    const userProfile = JSON.parse(localStorage.getItem("userProfile"));
+    if (token) {
+      dispatch(setAuthenticated(true)); // Update the authentication state
+      if (userProfile) {
+        dispatch(setUser(userProfile)); // Update the user profile state
+      }
+    } else {
+      dispatch(setAuthenticated(false)); // Ensure the state is false if no token
+    }
+  }, [dispatch]);
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <SidebarProvider>
-        <RouterProvider router={router} />
-      </SidebarProvider>
-    </QueryClientProvider>
+    <SidebarProvider>
+      <RouterProvider router={router} />
+    </SidebarProvider>
   );
 };
+
 export default App;

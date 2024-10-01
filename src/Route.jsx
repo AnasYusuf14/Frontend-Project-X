@@ -61,6 +61,7 @@ import { PostsLoder } from "./utils/postsLoder.js";
 import Tweet from "./components/pages/Home/Tweet/Tweet";
 import SignUpPage from "./components/pages/auth/signup/SignUpPage";
 import Trend from "./components/pages/Home/Trend/Trend";
+
 const componentMap = {
   Feed,
   Explore,
@@ -81,8 +82,10 @@ const componentMap = {
 
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  return isAuthenticated ? children : <Navigate to="/signup" />;
+  const token = localStorage.getItem("authToken");
+  return isAuthenticated || token ? children : <Navigate to="/signup" />;
 };
+
 export const router = createBrowserRouter([
   {
     index: true,
@@ -296,3 +299,6 @@ export const router = createBrowserRouter([
     element: <div>About</div>,
   },
 ]);
+
+const AppRouter = () => <RouterProvider router={router} />;
+export default AppRouter;

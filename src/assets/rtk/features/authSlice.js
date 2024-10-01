@@ -24,6 +24,8 @@ const customReducer = (state, action) => {
       return { ...state, isAuthenticated: action.payload };
     case 'auth/setUser':
       return { ...state, user: action.payload };
+    case 'auth/clearUser':
+      return { ...state, user: null, isAuthenticated: false };
     default:
       return state;
   }
@@ -38,8 +40,9 @@ const authSlice = createSlice({
     toggleSignInModal: (state) => customReducer(state, { type: 'auth/toggleSignInModal' }),
     setAuthenticated: (state, action) => customReducer(state, { ...action, type: 'auth/setAuthenticated' }),
     setUser: (state, action) => customReducer(state, { ...action, type: 'auth/setUser' }),
+    clearUser: (state) => customReducer(state, { type: 'auth/clearUser' }),
   },
 });
 
-export const { setFormData, toggleCreateAccountModal, toggleSignInModal, setAuthenticated, setUser } = authSlice.actions;
+export const { setFormData, toggleCreateAccountModal, toggleSignInModal, setAuthenticated, setUser, clearUser } = authSlice.actions;
 export default authSlice.reducer;
