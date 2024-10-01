@@ -10,7 +10,7 @@ export default function CreatorSubscriptions() {
           title="Manage Creator Subscriptions"
           icon={<FaRegLightbulb className=" text-2xl text-gray-500" />}
           description="View and manage your subscriptions to creators below using Stripe. Any active subscriptions you initiated on iOS or Android can be managed in the app."
-          onClick={() => null}
+          onClick={() => alert("You don't have any Subscriptions yet")}
         />
       </div>
     </div>

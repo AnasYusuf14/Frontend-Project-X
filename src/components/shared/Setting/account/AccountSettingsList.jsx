@@ -4,39 +4,42 @@ import { GoPerson } from "react-icons/go";
 import { HiOutlineKey } from "react-icons/hi";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { MdOutlineHeartBroken } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const AccountSettingsList = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="w-full h-full flex flex-col gap-2">
       <h1 className="mx-2 my-3 text-2xl font-bold">Account</h1>
-      <p className="mx-2  text-sm text-gray-500">
+      <p className="mx-2 text-sm text-gray-500">
         See information about your account, download an archive of your data, or
         learn about your account deactivation options
       </p>
       <div className="flex flex-col gap-2">
         <NestedListsItem
           title="Account information"
-          icon={<GoPerson className=" text-2xl text-gray-500" />}
+          icon={<GoPerson className="text-2xl text-gray-500" />}
           description="See your account information like your phone number and email address."
-          onClick={() => null}
+          onClick={() => navigate("your_twitter_data")}
         />
         <NestedListsItem
           title="Change your password"
-          icon={<HiOutlineKey className=" text-2xl text-gray-500" />}
+          icon={<HiOutlineKey className="text-2xl text-gray-500" />}
           description="Change your password at any time."
-          onClick={() => null}
+          onClick={() => navigate("change_passwords")}
         />
         <NestedListsItem
           title="Download an archive of your data"
-          icon={<MdOutlineFileDownload className=" text-2xl text-gray-500" />}
+          icon={<MdOutlineFileDownload className="text-2xl text-gray-500" />}
           description="Get insights into the type of information stored for your account."
-          onClick={() => null}
+          onClick={() => navigate("download_your_data")}
         />
         <NestedListsItem
           title="Deactivate your account"
-          icon={<MdOutlineHeartBroken className=" text-2xl text-gray-500" />}
+          icon={<MdOutlineHeartBroken className="text-2xl text-gray-500" />}
           description="Find out how you can deactivate your account."
-          onClick={() => null}
+          onClick={() => navigate("deactivate_your_account")}
         />
       </div>
     </div>

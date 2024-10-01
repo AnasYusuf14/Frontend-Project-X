@@ -5,7 +5,10 @@ import { MdOutlineLock } from "react-icons/md";
 import { IoPeopleOutline } from "react-icons/io5";
 import { MdSwapHoriz } from "react-icons/md";
 import { MdContentCopy } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 const SecurityAndAccountAccessList = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="w-full h-full flex flex-col gap-2">
       <h1 className="mx-2 my-3 text-2xl font-bold">
@@ -20,25 +23,25 @@ const SecurityAndAccountAccessList = () => {
           title="Security"
           icon={<MdOutlineLock className=" text-2xl text-gray-500" />}
           description="Manage your account's security."
-          onClick={() => null}
+          onClick={() => navigate("security")}
         />
         <NestedListsItem
           title="Apps and sessions"
           icon={<MdContentCopy className=" text-2xl text-gray-500" />}
           description="See information about when you logged into your account and the apps you connected to your account."
-          onClick={() => null}
+          onClick={() => navigate("apps_and_sessions")}
         />
         <NestedListsItem
           title="Connected accounts"
           icon={<MdSwapHoriz className=" text-2xl text-gray-500" />}
           description="Manage Google or Apple accounts connected to X to log in."
-          onClick={() => null}
+          onClick={() => navigate("connected_accounts")}
         />
         <NestedListsItem
           title="Delegate"
           icon={<IoPeopleOutline className=" text-2xl text-gray-500" />}
           description="Manage your shared accounts."
-          onClick={() => null}
+          onClick={() => navigate("delegate")}
         />
       </div>
     </div>

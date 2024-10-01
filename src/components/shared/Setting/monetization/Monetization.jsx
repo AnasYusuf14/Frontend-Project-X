@@ -15,16 +15,22 @@ export default function Monetization() {
         country. Some monetization programs are not available.
       </p>
       <div className="flex flex-col gap-2">
-        <NestedListsItem
-          title="Account information"
-          icon={
-            <div className="bg-indigo-600 w-[65px] rounded-lg p-3 ">
-              <IoIosInformationCircleOutline className="text-3xl text-white w-full text-center" />
-            </div>
-          }
-          description="See your account information like your phone number and email address."
-          onClick={() => null}
-        />
+        <a
+          href="https://help.x.com/en/using-x/creator-dashboard"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <NestedListsItem
+            title="Learn more"
+            icon={
+              <div className="bg-indigo-600 w-[65px] rounded-lg p-3 ">
+                <IoIosInformationCircleOutline className="text-3xl text-white w-full text-center" />
+              </div>
+            }
+            description="Learn more about our Monetization programs and policies here."
+            onClick={() => null}
+          />
+        </a>
       </div>
     </div>
   );

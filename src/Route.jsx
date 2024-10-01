@@ -52,6 +52,10 @@ import YourPosts from "./components/shared/Setting/privacy_and_safety/your_posts
 import AudienceMediaTagging from "./components/shared/Setting/privacy_and_safety/audience_media_tagging/AudienceMediaTagging";
 import Monetization from "./components/shared/Setting/monetization/Monetization";
 import NotificationsList from "./components/shared/Setting/notifications/NotificationsList.jsx";
+import Filters from "./components/shared/Setting/notifications/filters/Filters.jsx";
+import Preferences from "./components/shared/Setting/notifications/preferences/Preferences.jsx";
+import NotificationsInSettings from "./components/shared/Setting/notifications/Notifications.jsx";
+import KeyboardShortcutsPage from "./components/shared/Setting/display_and_language/KeyboardShortcuts";
 const componentMap = {
   Feed,
   Explore,
@@ -207,7 +211,21 @@ export const router = createBrowserRouter([
           },
           {
             path: "notifications",
-            element: <NotificationsList />,
+            element: <NotificationsInSettings />,
+            children: [
+              {
+                index: true,
+                element: <NotificationsList />,
+              },
+              {
+                path: "filters",
+                element: <Filters />,
+              },
+              {
+                path: "preferences",
+                element: <Preferences />,
+              },
+            ],
           },
           {
             path: "accessibility_display_and_languages",
@@ -232,6 +250,10 @@ export const router = createBrowserRouter([
               {
                 path: "languages",
                 element: <Languages />,
+              },
+              {
+                path: "keyboard_shortcuts",
+                element: <KeyboardShortcutsPage />,
               },
             ],
           },

@@ -2,7 +2,9 @@ import React from "react";
 import NestedListsItem from "../NestedListsItem";
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import { TbDeviceMobileMessage } from "react-icons/tb";
+import { useNavigate } from "react-router-dom";
 export default function NotificationsList() {
+  const navigate = useNavigate();
   return (
     <div className="w-full h-full flex flex-col gap-2">
       <h1 className="mx-2 my-3 text-2xl font-bold">Notifications</h1>
@@ -17,13 +19,13 @@ export default function NotificationsList() {
             <HiOutlineAdjustmentsHorizontal className=" text-2xl text-gray-500" />
           }
           description="Choose the notifications you’d like to see — and those you don’t."
-          onClick={() => null}
+          onClick={() => navigate("filters")}
         />
         <NestedListsItem
           title="Preferences"
           icon={<TbDeviceMobileMessage className=" text-2xl text-gray-500" />}
           description="Select your preferences by notification type."
-          onClick={() => null}
+          onClick={() => navigate("preferences")}
         />
       </div>
     </div>
