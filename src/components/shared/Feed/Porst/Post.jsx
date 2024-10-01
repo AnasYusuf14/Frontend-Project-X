@@ -19,7 +19,6 @@ const Post = () => {
 
       <div className="flex justify-between mt-2">
         <div className="space-x-2 ms-[52px] ">
-          {/* Icons like image, emoji */}
           <button className="text-[#13659d] text-xl hover:bg-[#175ccd54] rounded-full p-1 transition">
             <CiImageOn />
           </button>
