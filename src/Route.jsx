@@ -56,6 +56,7 @@ import Filters from "./components/shared/Setting/notifications/filters/Filters.j
 import Preferences from "./components/shared/Setting/notifications/preferences/Preferences.jsx";
 import NotificationsInSettings from "./components/shared/Setting/notifications/Notifications.jsx";
 import KeyboardShortcutsPage from "./components/shared/Setting/display_and_language/KeyboardShortcuts";
+import { PostsLoder } from "./utils/postsLoder.js";
 const componentMap = {
   Feed,
   Explore,
@@ -86,6 +87,9 @@ export const router = createBrowserRouter([
       ...LiftSideLinks.map(({ name }) => ({
         path: name.toLowerCase(),
         element: componentMap[name] ? componentMap[name]() : null,
+        // loader: () => {
+        //   return PostsLoder();
+        // },
       })),
       {
         path: "setting",
