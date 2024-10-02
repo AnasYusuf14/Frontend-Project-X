@@ -1,16 +1,9 @@
 import Post from "./Porst/Post";
 import TweetCard from "./TweetCard/TweetCard";
-import { useEffect, useState } from "react";
-import axios from "axios";
-
+// import { useEffect, useState } from "react";
+// import axios from "axios";
+import { posts } from "@/assets/posts";
 const Feed = () => {
-  const [posts, setPosts] = useState([]);
-  useEffect(() => {
-    axios.get("https://jsonplaceholder.typicode.com/posts").then((res) => {
-      console.log(res.data);
-      setPosts(res.data);
-    });
-  }, []);
   return (
     <div className="flex-1 text-white pb-4">
       <div className="flex text-center">
@@ -22,9 +15,9 @@ const Feed = () => {
         </button>
       </div>
       <Post />
-      <div className="space-y-4 p-4">
-        {posts.map((post, index) => (
-          <TweetCard post={post} key={index} />
+      <div className="space-y-4">
+        {posts.map((p, index) => (
+          <TweetCard p={p} key={index} />
         ))}
       </div>
     </div>

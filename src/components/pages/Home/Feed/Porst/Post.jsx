@@ -4,7 +4,6 @@ import { MdOutlineChecklist } from "react-icons/md";
 import { CiFaceSmile } from "react-icons/ci";
 import { CiCalendarDate } from "react-icons/ci";
 import { IoLocationOutline } from "react-icons/io5";
-
 const Post = () => {
   return (
     <div className="mb-4  border-y border-y-[#2f3336] p-4">
@@ -16,7 +15,6 @@ const Post = () => {
           className="w-full p-3 rounded-lg bg-black text-white outline-none	"
         />
       </div>
-
       <div className="flex justify-between mt-2">
         <div className="space-x-2 ms-[52px] ">
           <button className="text-[#13659d] text-xl hover:bg-[#175ccd54] rounded-full p-1 transition">
@@ -43,5 +41,4 @@ const Post = () => {
     </div>
   );
 };
-
 export default Post;

@@ -1,19 +1,19 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "./components/pages/Home/Home";
-import Feed from "./components/shared/Feed/Feed";
-import Ads from "./components/shared/Ads/Ads";
-import Bookmarks from "./components/shared/Bookmarks/Bookmarks";
-import Business from "./components/shared/Business/Business";
-import Communities from "./components/shared/Communities/Communities";
-import Create from "./components/shared/Create/Create";
-import Explore from "./components/shared/Explore/Explore";
-import Gork from "./components/shared/Gork/Gork";
-import Jobs from "./components/shared/Jobs/Jobs";
-import Lists from "./components/shared/Lists/Lists";
-import Messages from "./components/shared/Messages/Messages";
-import Notifications from "./components/shared/Notifications/Notifications";
-import Premium from "./components/shared/Premium/Premium";
-import Profile from "./components/shared/Profile/Profile";
+import Feed from "./components/pages/Home/Feed/Feed";
+import Ads from "./components/pages/Home/Ads/Ads";
+import Bookmarks from "./components/pages/Home/Bookmarks/Bookmarks";
+import Business from "./components/pages/Home/Business/Business";
+import Communities from "./components/pages/Home/Communities/Communities";
+import Create from "./components/pages/Home/Create/Create";
+import Explore from "./components/pages/Home/Explore/Explore";
+import Gork from "./components/pages/Home/Gork/Gork";
+import Jobs from "./components/pages/Home/Jobs/Jobs";
+import Lists from "./components/pages/Home/Lists/Lists";
+import Messages from "./components/pages/Home/Messages/Messages";
+import Notifications from "./components/pages/Home/Notifications/Notifications";
+import Premium from "./components/pages/Home/Premium/Premium";
+import Profile from "./components/pages/Home/Profile/Profile";
 import { LiftSideLinks } from "./assets/LiftSideLinks/index";
 import Setting from "./components/shared/Setting/Setting.jsx";
 import AccountListSettings from "./components/shared/Setting/account/AccountSettingsList";
@@ -57,6 +57,7 @@ import Preferences from "./components/shared/Setting/notifications/preferences/P
 import NotificationsInSettings from "./components/shared/Setting/notifications/Notifications.jsx";
 import KeyboardShortcutsPage from "./components/shared/Setting/display_and_language/KeyboardShortcuts";
 import { PostsLoder } from "./utils/postsLoder.js";
+import Tweet from "./components/pages/Home/Tweet/Tweet";
 const componentMap = {
   Feed,
   Explore,
@@ -83,6 +84,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Feed />,
+      },
+      {
+        path: "tweet",
+        element: <Tweet />,
       },
       ...LiftSideLinks.map(({ name }) => ({
         path: name.toLowerCase(),

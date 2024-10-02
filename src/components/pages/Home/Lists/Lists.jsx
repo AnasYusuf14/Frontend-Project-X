@@ -1,4 +1,4 @@
-import SearchBar from "../SearchBar/SearchBar";
+import SearchBar from "../../../shared/SearchBar/SearchBar";
 import DiscoverNewLists from "./components/ListItem";
 import YourLists from "./components/YourLists";
 
