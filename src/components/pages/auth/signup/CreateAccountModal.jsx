@@ -1,5 +1,5 @@
 import React from 'react';
-import XSvg from '../../../svgs/X'; // Adjust the import path as needed
+import XSvg from '../../../svgs/X'; 
 
 const CreateAccountModal = ({ isOpen, onClose, onSubmit, formData, handleInputChange }) => {
   if (!isOpen) return null;
