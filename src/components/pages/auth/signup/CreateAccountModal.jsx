@@ -1,5 +1,5 @@
 import React from 'react';
-import XSvg from '../../../svgs/X';
+import XSvg from '../../../svgs/X'; // Adjust the import path as needed
 
 const CreateAccountModal = ({ isOpen, onClose, onSubmit, formData, handleInputChange }) => {
   if (!isOpen) return null;
@@ -9,8 +9,8 @@ const CreateAccountModal = ({ isOpen, onClose, onSubmit, formData, handleInputCh
     "July", "August", "September", "October", "November", "December"
   ];
 
-  const days = Array.from({ length: 31 }, (_, i) => i + 1);
-  const years = Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - i);
+  const days = [...Array(31).keys()].map(i => i + 1);
+  const years = [...Array(100).keys()].map(i => new Date().getFullYear() - i);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -44,10 +44,6 @@ const CreateAccountModal = ({ isOpen, onClose, onSubmit, formData, handleInputCh
           </div>
           <div className="text-white mt-4">
             <label className="block mb-2">Date of birth</label>
-            <p className="text-gray-400 text-sm mt-2">
-              This will not be shown publicly. Confirm your own age, even if this account is for a business, a pet, or something else.
-            </p>
-            <br />
             <div className="flex space-x-4">
               <select className="w-1/3 border border-white rounded-lg px-3 py-2 bg-black text-white">
                 <option value="">Month</option>
@@ -69,7 +65,9 @@ const CreateAccountModal = ({ isOpen, onClose, onSubmit, formData, handleInputCh
               </select>
             </div>
           </div>
-
+          <p className="text-gray-400 text-sm mt-2">
+            This will not be shown publicly. Confirm your own age, even if this account is for a business, a pet, or something else.
+          </p>
           <button
             type="submit"
             className="rounded-full w-full bg-blue-500 text-white py-2 hover:bg-blue-600 transition duration-200"
