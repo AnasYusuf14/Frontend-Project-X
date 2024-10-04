@@ -73,7 +73,7 @@ const SignUpPage = () => {
                 <br />
                 <h1 className="text-3xl font-extrabold text-white text-left">Join today.</h1>
                 <div className='flex flex-col lg:w-2/3 gap-4 mt-8'>
-                    <button className='btn rounded-full bg-white text-black py-2 w-full flex items-center justify-center gap-2'>
+                    <button className='btn rounded-full bg-white text-black py-2 w-full flex items-center justify-center gap-2 hover:text-white' >
                         <FcGoogle className="w-6 h-6" />
                         Sign in with Google
                     </button>
