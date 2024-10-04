@@ -58,6 +58,7 @@ import NotificationsInSettings from "./components/shared/Setting/notifications/N
 import KeyboardShortcutsPage from "./components/shared/Setting/display_and_language/KeyboardShortcuts";
 import { PostsLoder } from "./utils/postsLoder.js";
 import Tweet from "./components/pages/Home/Tweet/Tweet";
+import SignUpPage from "./components/pages/auth/signup/SignUpPage";
 const componentMap = {
   Feed,
   Explore,
@@ -76,9 +77,13 @@ const componentMap = {
   Gork, // Commented out as it is not defined
 };
 
-export const router = createBrowserRouter([
+export const router = createBrowserRouter([{
+  path: "/",
+  element: <SignUpPage />,
+}
+  ,
   {
-    path: "/",
+    path: "/home",
     element: <Home />,
     children: [
       {
