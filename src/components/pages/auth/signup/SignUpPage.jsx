@@ -2,11 +2,10 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
-import { FaApple, FaUser } from "react-icons/fa";
+import { FaApple } from "react-icons/fa";
 import XSvg from '../../../svgs/X';
-import { setFormData, toggleCreateAccountModal, toggleSignInModal, setAuthenticated } from '../../../../redux/slices/authSlice.js';
+import { setFormData, toggleCreateAccountModal, toggleSignInModal, setAuthenticated, setUser } from '../../../../redux/slices/authSlice.js';
 import axios from 'axios';
-import toast from 'react-hot-toast';
 import SignInModal from './SignInModal';
 import CreateAccountModal from './CreateAccountModal';
 
@@ -15,14 +14,24 @@ const SignUpPage = () => {
     const formData = useSelector((state) => state.auth);
     const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
+       const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.get(`https://jsonplaceholder.typicode.com/users?email=${formData.email}`);
+            const identifier = formData.identifier;
+            let res;
+            if (identifier.includes('@')) {
+                res = await axios.get(`https://jsonplaceholder.typicode.com/users?email=${identifier}`);
+            } else if (/^\d+$/.test(identifier)) {
+                res = await axios.get(`https://jsonplaceholder.typicode.com/users?phone=${identifier}`);
+            } else {
+                res = await axios.get(`https://jsonplaceholder.typicode.com/users?username=${identifier}`);
+            }
             const data = res.data;
             if (data.length === 0) throw new Error("User not found");
+            const user = data[0];
             toast.success("Signed in successfully");
             dispatch(setAuthenticated(true));
+            dispatch(setUser(user));
             navigate('/home');
         } catch (error) {
             toast.error("Failed to sign in");
