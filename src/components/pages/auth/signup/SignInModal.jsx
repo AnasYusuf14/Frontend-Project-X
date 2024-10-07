@@ -1,10 +1,11 @@
+// src/components/pages/auth/signup/SignInModal.jsx
 import React, { useState } from 'react';
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import XSvg from '../../../svgs/X';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setAuthenticated } from '../../../../redux/slices/authSlice';
+import { setAuthenticated, setUser } from '../../../../redux/slices/authSlice';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -30,8 +31,10 @@ const SignInModal = ({ isOpen, onClose, formData, handleInputChange }) => {
         setError('Email, phone number, or username not found');
         return;
       }
+      const user = data[0];
       toast.success("Signed in successfully");
       dispatch(setAuthenticated(true));
+      dispatch(setUser(user)); // Dispatch setUser action
       navigate('/home');
       onClose();
     } catch (error) {
