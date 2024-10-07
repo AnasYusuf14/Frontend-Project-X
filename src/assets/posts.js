@@ -5,11 +5,12 @@ export const posts = [
         user: "jacksonhinkle",
         userImg: "/images/avatar-01.png",
         postTime: "2h",
-        postText: "Free Palestina",
+        postContent: "Free Palestina",
         postImg: "/images/news-01.png",
         views: "2.4M",
         retweets: "1.3K",
-        likes: "44K",
+        likes: 44,
+        fullPostTime: "5:11 PM, Oct,2024",
         replies: [
             {
                 userName: "KingOfTX",

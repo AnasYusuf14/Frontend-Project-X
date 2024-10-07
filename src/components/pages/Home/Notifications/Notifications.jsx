@@ -4,9 +4,22 @@ import { AiOutlineTwitter } from "react-icons/ai";
 
 const Notifications = () => {
   return (
-    <div className="mx-auto text-white py-4 rounded-lg shadow-lg">
-      <div className="flex justify-between items-center mb-4">
+    <div className="text-white py-4 rounded-lg shadow-lg">
+      <div className="sticky top-0 bg-[#000000d9] border-b border-[#2f3336]">
         <h3 className="text-lg font-semibold ps-3">Notifications</h3>
+        <div className="flex justify-around">
+          <button className="p-4 text-sm hover:bg-[#333] transition 	">
+            All
+          </button>
+          <button className="p-4 text-sm hover:bg-[#333] transition 	">
+            Verified
+          </button>
+          <button className="p-4 text-sm hover:bg-[#333] transition 	">
+            Mentions
+          </button>
+        </div>
+      </div>
+      <div className="flex justify-between items-center mb-4">
         <button className="text-gray-400 pe-3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -24,23 +37,6 @@ const Notifications = () => {
           </svg>
         </button>
       </div>
-
-      <div className="flex border-b border-gray-700 mb-4">
-        {/* {["All", "Verified", "Mentions"].map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 text-sm ${
-              activeTab === tab
-                ? "border-b-2 border-blue-500 text-white"
-                : "text-gray-500"
-            }`}
-          >
-            {tab}
-          </button>
-        ))} */}
-      </div>
-
       <div className="space-y-4">
         <div className="flex items-start space-x-4 p-4  border-b border-gray-700">
           <AiOutlineTwitter className="text-2xl text-white" />
@@ -52,7 +48,6 @@ const Notifications = () => {
             </p>
           </div>
         </div>
-
         <div className="flex items-start space-x-4 p-4   border-b border-gray-700">
           <FaExclamationTriangle className="text-2xl text-red-500" />
           <div>

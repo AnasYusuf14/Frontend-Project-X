@@ -2,11 +2,9 @@ const ListItem = ({ title, members, followers, icon, users }) => {
   return (
     <div className="flex justify-between items-center py-4 border-b border-gray-700">
       <div className="flex items-center space-x-4">
-        {/* Icon */}
         <div className="flex-shrink-0">
           <div className={`p-2 rounded-lg ${icon.bgColor}`}>{icon.element}</div>
         </div>
-        {/* List details */}
         <div>
           <h4 className="text-white font-bold">{title}</h4>
           <p className="text-gray-500 text-sm">{members} members</p>
@@ -15,14 +13,12 @@ const ListItem = ({ title, members, followers, icon, users }) => {
           </p>
         </div>
       </div>
-      {/* Follow button */}
       <button className="text-white bg-gray-800 hover:bg-gray-700 rounded-full px-3 py-1">
         +
       </button>
     </div>
   );
 };
-
 const DiscoverNewLists = () => {
   const lists = [
     {
@@ -56,7 +52,6 @@ const DiscoverNewLists = () => {
       users: "@av_barandogan",
     },
   ];
-
   return (
     <div className="bg-black text-white p-4">
       <h2 className="text-lg font-semibold mb-4">Discover new Lists</h2>

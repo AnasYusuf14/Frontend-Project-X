@@ -59,6 +59,7 @@ import KeyboardShortcutsPage from "./components/shared/Setting/display_and_langu
 import { PostsLoder } from "./utils/postsLoder.js";
 import Tweet from "./components/pages/Home/Tweet/Tweet";
 import SignUpPage from "./components/pages/auth/signup/SignUpPage";
+import Trend from "./components/pages/Home/Trend/Trend";
 const componentMap = {
   Feed,
   Explore,
@@ -77,11 +78,11 @@ const componentMap = {
   Gork, // Commented out as it is not defined
 };
 
-export const router = createBrowserRouter([{
-  path: "/",
-  element: <SignUpPage />,
-}
-  ,
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <SignUpPage />,
+  },
   {
     path: "/home",
     element: <Home />,
@@ -93,6 +94,10 @@ export const router = createBrowserRouter([{
       {
         path: "tweet",
         element: <Tweet />,
+      },
+      {
+        path: "trend",
+        element: <Trend />,
       },
       ...LiftSideLinks.map(({ name }) => ({
         path: name.toLowerCase(),

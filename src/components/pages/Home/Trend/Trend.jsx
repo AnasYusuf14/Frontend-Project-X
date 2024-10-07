@@ -1,28 +1,32 @@
-import SearchInput from "@/components/shared/SearchInput/searchInput";
+import React from "react";
+import { useSearchParams } from "react-router-dom";
 import TweetCard from "../Feed/TweetCard/TweetCard";
+import SearchInput from "@/components/shared/SearchInput/SearchInput";
 import { posts } from "@/assets/posts";
 
-const Explore = () => {
+const Trend = () => {
+  const [searchParams] = useSearchParams();
+  const trendName = searchParams.get("tn");
   return (
     <div className="flex-1 text-white pb-3">
       <div className="text-center sticky top-0 bg-[#000000d9] border-b border-[#2f3336]">
-        <SearchInput />
+        <SearchInput trendName={trendName} />
 
         <div className="flex justify-around">
           <button className="p-4 text-sm hover:bg-[#333] transition ">
-            For You
+            Top
           </button>
           <button className="p-4 text-sm hover:bg-[#333] transition 	">
-            Trending
+            Latest
           </button>
           <button className="p-4 text-sm hover:bg-[#333] transition 	">
-            News
+            People
           </button>
           <button className="p-4 text-sm hover:bg-[#333] transition 	">
-            Sports
+            Media
           </button>
           <button className="p-4 text-sm hover:bg-[#333] transition 	">
-            Entertainment
+            Lists
           </button>
         </div>
       </div>
@@ -35,4 +39,4 @@ const Explore = () => {
   );
 };
 
-export default Explore;
+export default Trend;
