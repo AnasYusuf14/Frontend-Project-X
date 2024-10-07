@@ -20,12 +20,14 @@ const SignInModal = ({ isOpen, onClose, formData, handleInputChange }) => {
       let res;
       if (identifier.includes('@')) {
         res = await axios.get(`https://jsonplaceholder.typicode.com/users?email=${identifier}`);
-      } else {
+      } else if (/^\d+$/.test(identifier)) {
         res = await axios.get(`https://jsonplaceholder.typicode.com/users?phone=${identifier}`);
+      } else {
+        res = await axios.get(`https://jsonplaceholder.typicode.com/users?username=${identifier}`);
       }
       const data = res.data;
       if (data.length === 0) {
-        setError('Email or phone number not found');
+        setError('Email, phone number, or username not found');
         return;
       }
       toast.success("Signed in successfully");
