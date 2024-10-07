@@ -1,67 +1,49 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
-import CreateAccountModal from './CreateAccountModal';
-import SignInModal from './SignInModal';
+import XSvg from '../../../svgs/X';
+import { setFormData, toggleCreateAccountModal, toggleSignInModal, setAuthenticated, setUser } from '../../../../redux/slices/authSlice.js';
 import axios from 'axios';
-
-import XSvg from '../../../svgs/X'
-
-import { MdOutlineMail } from "react-icons/md";
-import { FaUser } from "react-icons/fa";
-import { MdPassword } from "react-icons/md";
-import { MdDriveFileRenameOutline } from "react-icons/md";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+import SignInModal from './SignInModal';
+import CreateAccountModal from './CreateAccountModal';
 
 const SignUpPage = () => {
-    const [formData, setFormData] = useState({
-        email: "",
-        username: "",
-        fullName: "",
-        password: "",
-        identifier: ""
-    });
-    const [isCreateAccountModalOpen, setIsCreateAccountModalOpen] = useState(false);
-    const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
+    const dispatch = useDispatch();
+    const formData = useSelector((state) => state.auth);
+    const navigate = useNavigate();
 
-    const queryClient = useQueryClient();
-
-    const { mutate, isError, isPending, error } = useMutation({
-        mutationFn: async ({ email, username, fullName, password }) => {
-            try {
-                const res = await axios.post("https://jsonplaceholder.typicode.com/users", {
-                    email,
-                    username,
-                    fullName,
-                    password
-                });
-
-                const data = res.data;
-                if (res.status !== 201) throw new Error(data.error || "Failed to create account");
-                console.log(data);
-                return data;
-            } catch (error) {
-                console.error(error);
-                throw error;
+       const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const identifier = formData.identifier;
+            let res;
+            if (identifier.includes('@')) {
+                res = await axios.get(`https://jsonplaceholder.typicode.com/users?email=${identifier}`);
+            } else if (/^\d+$/.test(identifier)) {
+                res = await axios.get(`https://jsonplaceholder.typicode.com/users?phone=${identifier}`);
+            } else {
+                res = await axios.get(`https://jsonplaceholder.typicode.com/users?username=${identifier}`);
             }
-        },
-        onSuccess: () => {
-            toast.success("Account created successfully");
-            queryClient.invalidateQueries({ queryKey: ["authUser"] });
-            setIsCreateAccountModalOpen(false);
-        },
-    });
-
-    const handleSubmit = (e) => {
-        e.preventDefault(); // page won't reload
-        mutate(formData);
+            const data = res.data;
+            if (data.length === 0) throw new Error("User not found");
+            const user = data[0];
+            toast.success("Signed in successfully");
+            dispatch(setAuthenticated(true));
+            dispatch(setUser(user));
+            navigate('/home');
+        } catch (error) {
+            toast.error("Failed to sign in");
+        }
     };
 
     const handleInputChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        dispatch(setFormData({ [e.target.name]: e.target.value }));
     };
+
+    const isCreateAccountModalOpen = useSelector((state) => state.auth.isCreateAccountModalOpen);
+    const isSignInModalOpen = useSelector((state) => state.auth.isSignInModalOpen);
 
     return (
         <div className='max-w-screen-xl mx-auto flex h-screen px-10'>
@@ -88,7 +70,7 @@ const SignUpPage = () => {
                     </div>
                     <button
                         className='btn rounded-full bg-blue-500 text-white py-2 w-full hover:bg-blue-600 transition duration-200'
-                        onClick={() => setIsCreateAccountModalOpen(true)}
+                        onClick={() => dispatch(toggleCreateAccountModal())}
                     >
                         Create Account
                     </button>
@@ -97,7 +79,7 @@ const SignUpPage = () => {
                     <p className='text-white text-lg'>Already have an account?</p>
                     <button
                         className='btn rounded-full text-blue-500 btn-outline w-full'
-                        onClick={() => setIsSignInModalOpen(true)}
+                        onClick={() => dispatch(toggleSignInModal())}
                     >
                         Sign in
                     </button>
@@ -105,15 +87,13 @@ const SignUpPage = () => {
             </div>
             <CreateAccountModal
                 isOpen={isCreateAccountModalOpen}
-                onClose={() => setIsCreateAccountModalOpen(false)}
-                onSubmit={handleSubmit}
+                onClose={() => dispatch(toggleCreateAccountModal())}
                 formData={formData}
                 handleInputChange={handleInputChange}
             />
             <SignInModal
                 isOpen={isSignInModalOpen}
-                onClose={() => setIsSignInModalOpen(false)}
-                onSubmit={handleSubmit}
+                onClose={() => dispatch(toggleSignInModal())}
                 formData={formData}
                 handleInputChange={handleInputChange}
             />

@@ -1,4 +1,5 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
 import Home from "./components/pages/Home/Home";
 import Feed from "./components/pages/Home/Feed/Feed";
 import Ads from "./components/pages/Home/Ads/Ads";
@@ -59,7 +60,6 @@ import KeyboardShortcutsPage from "./components/shared/Setting/display_and_langu
 import { PostsLoder } from "./utils/postsLoder.js";
 import Tweet from "./components/pages/Home/Tweet/Tweet";
 import SignUpPage from "./components/pages/auth/signup/SignUpPage";
-import Trend from "./components/pages/Home/Trend/Trend";
 const componentMap = {
   Feed,
   Explore,
@@ -75,17 +75,26 @@ const componentMap = {
   Jobs,
   Create,
   Bookmarks,
-  Gork, // Commented out as it is not defined
+  Gork,
 };
 
-export const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <SignUpPage />,
-  },
+const ProtectedRoute = ({ children }) => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  return isAuthenticated ? children : <Navigate to="/signup" />;
+};
+
+export const router = createBrowserRouter([{
+  path: "/",
+  element: <SignUpPage />,
+}
+  ,
   {
     path: "/home",
-    element: <Home />,
+    element: (
+      <ProtectedRoute>
+        <Home />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true,
@@ -102,9 +111,6 @@ export const router = createBrowserRouter([
       ...LiftSideLinks.map(({ name }) => ({
         path: name.toLowerCase(),
         element: componentMap[name] ? componentMap[name]() : null,
-        // loader: () => {
-        //   return PostsLoder();
-        // },
       })),
       {
         path: "setting",
@@ -180,27 +186,27 @@ export const router = createBrowserRouter([
               },
               {
                 path: "audience_media_tagging",
-                element: <AudienceMediaTagging />, // Create this component
+                element: <AudienceMediaTagging />,
               },
               {
                 path: "your_posts",
-                element: <YourPosts />, // Create this component
+                element: <YourPosts />,
               },
               {
                 path: "content_you_see",
-                element: <ContentYouSee />, // Create this component
+                element: <ContentYouSee />,
               },
               {
                 path: "mute_and_block",
-                element: <MuteAndBlock />, // Create this component
+                element: <MuteAndBlock />,
               },
               {
                 path: "direct_messages",
-                element: <DirectMessages />, // Create this component
+                element: <DirectMessages />,
               },
               {
                 path: "spaces",
-                element: <Spaces />, // Create this component
+                element: <Spaces />,
               },
               {
                 path: "discoverability-and-contacts",
@@ -208,23 +214,23 @@ export const router = createBrowserRouter([
               },
               {
                 path: "ads_preferences",
-                element: <AdsPreferences />, // Create this component
+                element: <AdsPreferences />,
               },
               {
                 path: "inferred_identity",
-                element: <InferredIdentity />, // Create this component
+                element: <InferredIdentity />,
               },
               {
                 path: "data_sharing_with_business_partners",
-                element: <DataSharingWithBusinessPartners />, // Create this component
+                element: <DataSharingWithBusinessPartners />,
               },
               {
                 path: "location_information",
-                element: <LocationInformation />, // Create this component
+                element: <LocationInformation />,
               },
               {
                 path: "grok",
-                element: <Grok />, // Create this component
+                element: <Grok />,
               },
             ],
           },

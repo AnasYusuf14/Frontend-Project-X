@@ -1,9 +1,47 @@
-import React from 'react';
+// src/components/pages/auth/signup/SignInModal.jsx
+import React, { useState } from 'react';
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
-import XSvg from '../../../svgs/X'; 
+import XSvg from '../../../svgs/X';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setAuthenticated, setUser } from '../../../../redux/slices/authSlice';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
-const SignInModal = ({ isOpen, onClose, onSubmit, formData, handleInputChange }) => {
+const SignInModal = ({ isOpen, onClose, formData, handleInputChange }) => {
+  const [error, setError] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const identifier = formData.identifier;
+      let res;
+      if (identifier.includes('@')) {
+        res = await axios.get(`https://jsonplaceholder.typicode.com/users?email=${identifier}`);
+      } else if (/^\d+$/.test(identifier)) {
+        res = await axios.get(`https://jsonplaceholder.typicode.com/users?phone=${identifier}`);
+      } else {
+        res = await axios.get(`https://jsonplaceholder.typicode.com/users?username=${identifier}`);
+      }
+      const data = res.data;
+      if (data.length === 0) {
+        setError('Email, phone number, or username not found');
+        return;
+      }
+      const user = data[0];
+      toast.success("Signed in successfully");
+      dispatch(setAuthenticated(true));
+      dispatch(setUser(user)); // Dispatch setUser action
+      navigate('/home');
+      onClose();
+    } catch (error) {
+      toast.error("Failed to sign in");
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -29,15 +67,19 @@ const SignInModal = ({ isOpen, onClose, onSubmit, formData, handleInputChange })
           <span className="mx-4 text-gray-400">or</span>
           <hr className="flex-grow border-t border-gray-600" />
         </div>
-        <form onSubmit={onSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
-            className="w-full border border-white rounded-lg px-3 py-4 outline-none bg-black text-white"
+            className={`w-full border ${error ? 'border-red-500' : 'border-white'} rounded-lg px-3 py-4 outline-none bg-black text-white`}
             placeholder="Phone, email, or username"
             name="identifier"
-            onChange={handleInputChange}
+            onChange={(e) => {
+              handleInputChange(e);
+              setError(''); 
+            }}
             value={formData.identifier}
           />
+          {error && <p className="text-red-500">{error}</p>}
           <button
             type="submit"
             className="rounded-full w-full bg-blue-500 text-white py-2 hover:bg-blue-600 transition duration-200"
