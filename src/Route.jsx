@@ -1,5 +1,5 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import Home from "./components/pages/Home/Home";
 import Feed from "./components/pages/Home/Feed/Feed";
 import Ads from "./components/pages/Home/Ads/Ads";
@@ -60,6 +60,7 @@ import KeyboardShortcutsPage from "./components/shared/Setting/display_and_langu
 import { PostsLoder } from "./utils/postsLoder.js";
 import Tweet from "./components/pages/Home/Tweet/Tweet";
 import SignUpPage from "./components/pages/auth/signup/SignUpPage";
+import Trend from "./components/pages/Home/Trend/Trend";
 const componentMap = {
   Feed,
   Explore,
@@ -83,11 +84,11 @@ const ProtectedRoute = ({ children }) => {
   return isAuthenticated ? children : <Navigate to="/signup" />;
 };
 
-export const router = createBrowserRouter([{
-  path: "/",
-  element: <SignUpPage />,
-}
-  ,
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <SignUpPage />,
+  },
   {
     path: "/home",
     element: (

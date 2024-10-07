@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Create a client
 const queryClient = new QueryClient();
-
 const App = () => {
   // const dispatch = useDispatch();
   // useEffect(() => {
@@ -18,14 +17,11 @@ const App = () => {
   //   });
   // }, []);
   return (
-    <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <SidebarProvider>
-          <RouterProvider router={router} />
-        </SidebarProvider>
-      </QueryClientProvider>
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <SidebarProvider>
+        <RouterProvider router={router} />
+      </SidebarProvider>
+    </QueryClientProvider>
   );
 };
-
 export default App;

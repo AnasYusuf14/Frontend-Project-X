@@ -1,16 +1,19 @@
 // src/components/pages/auth/signup/SignInModal.jsx
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
-import XSvg from '../../../svgs/X';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { setAuthenticated, setUser } from '../../../../redux/slices/authSlice';
-import axios from 'axios';
-import toast from 'react-hot-toast';
+import XSvg from "../../../svgs/X";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+  setAuthenticated,
+  setUser,
+} from "../../../../assets/rtk/features/authSlice";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const SignInModal = ({ isOpen, onClose, formData, handleInputChange }) => {
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -19,23 +22,29 @@ const SignInModal = ({ isOpen, onClose, formData, handleInputChange }) => {
     try {
       const identifier = formData.identifier;
       let res;
-      if (identifier.includes('@')) {
-        res = await axios.get(`https://jsonplaceholder.typicode.com/users?email=${identifier}`);
+      if (identifier.includes("@")) {
+        res = await axios.get(
+          `https://jsonplaceholder.typicode.com/users?email=${identifier}`
+        );
       } else if (/^\d+$/.test(identifier)) {
-        res = await axios.get(`https://jsonplaceholder.typicode.com/users?phone=${identifier}`);
+        res = await axios.get(
+          `https://jsonplaceholder.typicode.com/users?phone=${identifier}`
+        );
       } else {
-        res = await axios.get(`https://jsonplaceholder.typicode.com/users?username=${identifier}`);
+        res = await axios.get(
+          `https://jsonplaceholder.typicode.com/users?username=${identifier}`
+        );
       }
       const data = res.data;
       if (data.length === 0) {
-        setError('Email, phone number, or username not found');
+        setError("Email, phone number, or username not found");
         return;
       }
       const user = data[0];
       toast.success("Signed in successfully");
       dispatch(setAuthenticated(true));
       dispatch(setUser(user)); // Dispatch setUser action
-      navigate('/home');
+      navigate("/home");
       onClose();
     } catch (error) {
       toast.error("Failed to sign in");
@@ -48,17 +57,21 @@ const SignInModal = ({ isOpen, onClose, formData, handleInputChange }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-black p-8 rounded-lg shadow-lg w-full max-w-lg h-auto">
         <div className="flex justify-end">
-          <button onClick={onClose} className="text-white hover:text-gray-300">&times;</button>
+          <button onClick={onClose} className="text-white hover:text-gray-300">
+            &times;
+          </button>
         </div>
         <div className="flex justify-center mb-4">
-          <XSvg className='w-12 h-12 fill-current text-white' />
+          <XSvg className="w-12 h-12 fill-current text-white" />
         </div>
-        <h2 className="text-2xl font-bold mb-6 text-center text-white">Sign in to X</h2>
-        <button className='btn rounded-full bg-white text-black py-2 w-full flex items-center justify-center gap-2 mb-4 hover:text-white'>
+        <h2 className="text-2xl font-bold mb-6 text-center text-white">
+          Sign in to X
+        </h2>
+        <button className="btn rounded-full bg-white text-black py-2 w-full flex items-center justify-center gap-2 mb-4 hover:text-white">
           <FcGoogle className="w-6 h-6" />
           Sign in with Google
         </button>
-        <button className='btn rounded-full bg-black text-white py-2 w-full flex items-center justify-center gap-2 mb-4'>
+        <button className="btn rounded-full bg-black text-white py-2 w-full flex items-center justify-center gap-2 mb-4">
           <FaApple className="w-6 h-6" />
           Sign in with Apple
         </button>
@@ -70,12 +83,14 @@ const SignInModal = ({ isOpen, onClose, formData, handleInputChange }) => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
-            className={`w-full border ${error ? 'border-red-500' : 'border-white'} rounded-lg px-3 py-4 outline-none bg-black text-white`}
+            className={`w-full border ${
+              error ? "border-red-500" : "border-white"
+            } rounded-lg px-3 py-4 outline-none bg-black text-white`}
             placeholder="Phone, email, or username"
             name="identifier"
             onChange={(e) => {
               handleInputChange(e);
-              setError(''); 
+              setError("");
             }}
             value={formData.identifier}
           />

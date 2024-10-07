@@ -2,9 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
-
 const Profile = () => {
-  
   return (
     <div className="bg-black  text-white">
       <ProfileSection />
@@ -14,20 +12,21 @@ const Profile = () => {
   );
 };
 const ProfileSection = () => {
+  const user = useSelector((state) => state.auth);
   return (
-    <div className="bg-black text-white ">
+    <div className="flex-1 bg-black text-white ">
       <div className="bg-[#333639] h-32"></div>
       <div className="relative -mt-16 ps-4  items-center space-x-4">
         <FaUserCircle className="text-8xl text-blue-500" />
         <div>
           <div className="flex items-center space-x-2">
-            <h1 className="text-2xl font-bold">Abd Ayman</h1>
+            <h1 className="text-2xl font-bold">{user.user.name}</h1>
             <AiFillCheckCircle className="text-blue-500" />
             <button className="ml-4 px-2 py-1 bg-gray-800 text-sm rounded-lg border border-gray-700 hover:bg-gray-700">
               Edit Profile
             </button>
           </div>
-          <p className="text-gray-400 mb-3">@dopagaming</p>
+          <p className="text-gray-400 mb-3">@{user.user.username}</p>
           <p className="text-gray-500 text-sm">Joined November 2023</p>
         </div>
         <div className="flex">
@@ -44,7 +43,6 @@ const ProfileSection = () => {
     </div>
   );
 };
-
 const TabsSection = () => {
   return (
     <div className="bg-black text-white border-b border-gray-800">
@@ -59,7 +57,6 @@ const TabsSection = () => {
     </div>
   );
 };
-
 const FollowSuggestions = () => {
   return (
     <div className="bg-black text-white p-6">
