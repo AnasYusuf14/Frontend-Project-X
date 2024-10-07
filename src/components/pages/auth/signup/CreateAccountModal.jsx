@@ -6,8 +6,9 @@ import { useDispatch } from 'react-redux';
 import { setAuthenticated } from '../../../../redux/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
 
-const CreateAccountModal = ({ isOpen, onClose, formData, handleInputChange }) => {
+const CreateAccountModal = ({ isOpen, onClose, formData, handleInputChange, setFormData }) => {
   const [error, setError] = useState('');
+  const [useEmail, setUseEmail] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -33,6 +34,11 @@ const CreateAccountModal = ({ isOpen, onClose, formData, handleInputChange }) =>
       setError('Failed to create account');
       toast.error("Failed to create account");
     }
+  };
+
+  const handleUseEmailInstead = () => {
+    setUseEmail(!useEmail);
+    setFormData({ ...formData, phone: useEmail ? '' : 'email' });
   };
 
   if (!isOpen) return null;
@@ -68,14 +74,14 @@ const CreateAccountModal = ({ isOpen, onClose, formData, handleInputChange }) =>
           <input
             type="text"
             className="w-full border border-white rounded-lg px-3 py-4 outline-none bg-black text-white"
-            placeholder="Phone"
+            placeholder={useEmail ? "Email" : "Phone"}
             name="phone"
             onChange={handleInputChange}
             value={formData.phone}
             required
           />
-          <div className="text-right text-blue-500 cursor-pointer hover:underline">
-            Use email instead
+          <div className="text-right text-blue-500 cursor-pointer hover:underline" onClick={handleUseEmailInstead}>
+            {useEmail ? "Use phone instead" : "Use email instead"}
           </div>
           <div className="text-white mt-4">
             <label className="block mb-2">Date of birth</label>
