@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaUser } from "react-icons/fa";
-import { MdOutlineMail, MdPassword, MdDriveFileRenameOutline } from "react-icons/md";
 import XSvg from '../../../svgs/X';
 import { setFormData, toggleCreateAccountModal, toggleSignInModal, setAuthenticated } from '../../../../redux/slices/authSlice.js';
 import axios from 'axios';
