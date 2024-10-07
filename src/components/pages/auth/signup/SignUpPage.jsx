@@ -80,7 +80,6 @@ const SignUpPage = () => {
             <CreateAccountModal
                 isOpen={isCreateAccountModalOpen}
                 onClose={() => dispatch(toggleCreateAccountModal())}
-                onSubmit={handleSubmit}
                 formData={formData}
                 handleInputChange={handleInputChange}
             />
