@@ -44,7 +44,7 @@ const SignUpPage = () => {
       toast.success("Signed in successfully");
       dispatch(setAuthenticated(true));
       dispatch(setUser(user));
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       toast.error("Failed to sign in");
     }

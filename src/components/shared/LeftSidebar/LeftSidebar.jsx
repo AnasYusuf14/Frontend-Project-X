@@ -26,13 +26,13 @@ const LeftSidebar = () => {
   };
   return (
     <div className="sticky top-0 text-white flex flex-col p-4 text-center xl:text-start relative">
-      <div className="space-y-1">
-        <div className="ps-3 cursor-pointer ">
+      <div className="space-y-1 flex flex-col items-center lg:items-start">
+        <div className="xl:ps-3 cursor-pointer ">
           <a href="/">
             <FaXTwitter className="text-3xl" />
           </a>
         </div>
-        <div className="space-y-1">
+        <div className="space-y-1 flex flex-col items-center lg:items-start">
           {LiftSideLinks.map(({ name, iconName: Icon }, index) => {
             if (name === "setting/account") {
               return (

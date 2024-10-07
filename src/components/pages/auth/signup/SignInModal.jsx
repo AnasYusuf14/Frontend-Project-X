@@ -44,7 +44,7 @@ const SignInModal = ({ isOpen, onClose, formData, handleInputChange }) => {
       toast.success("Signed in successfully");
       dispatch(setAuthenticated(true));
       dispatch(setUser(user)); // Dispatch setUser action
-      navigate("/home");
+      navigate("/");
       onClose();
     } catch (error) {
       toast.error("Failed to sign in");

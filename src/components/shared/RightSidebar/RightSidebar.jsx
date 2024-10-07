@@ -10,6 +10,7 @@ const RightSidebar = () => {
   const { t } = useTranslation();
   const [displayedTrends, setDisplayedTrends] = useState(5);
   const [displayedUsers, setDisplayedUsers] = useState(5);
+  const [follow, setFollow] = useState(false);
   const showMoreOrLessTrends = () => {
     if (displayedTrends <= 5) {
       setDisplayedTrends(displayedTrends + 5);
@@ -37,7 +38,7 @@ const RightSidebar = () => {
               <li
                 key={index}
                 className="flex justify-between items-center text-gray-400 px-4 py-3 hover:bg-[#080808] transition cursor-pointer"
-                onClick={() => navigate(`/home/trend?tn=${trend.trendName}`)}
+                onClick={() => navigate(`/trend?tn=${trend.trendName}`)}
               >
                 <div>
                   <p>{trend.trendName}</p>
@@ -65,7 +66,11 @@ const RightSidebar = () => {
         <h3 className="text-lg font-semibold mb-4">{t("Who to follow")}</h3>
         <ul className="space-y-4">
           {Users.slice(0, displayedUsers).map((user, index) => (
-            <li key={index} className="flex justify-between items-center">
+            <li
+              key={index}
+              className="flex justify-between items-center"
+              onClick={() => navigate(`/profile?name=${user.username}`)}
+            >
               <div className="flex items-center">
                 <img
                   src={user.avatar}
@@ -74,11 +79,14 @@ const RightSidebar = () => {
                 />
                 <div>
                   <p className="text-sm font-semibold">{user.name}</p>
-                  <p className="text-xs text-gray-500">{user.username}</p>
+                  <p className="text-xs text-gray-500">@{user.username}</p>
                 </div>
               </div>
-              <button className="bg-blue-600 text-white text-sm px-4 py-1 rounded-full">
-                {t("Follow")}
+              <button
+                className="bg-blue-600 text-white text-sm px-4 py-1 rounded-full"
+                onClick={() => setFollow(!follow)}
+              >
+                {follow == true ? t("unFollow") : t("Follow")}
               </button>
             </li>
           ))}

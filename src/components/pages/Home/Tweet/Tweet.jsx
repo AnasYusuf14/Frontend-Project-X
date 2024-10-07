@@ -88,7 +88,7 @@ const Tweet = () => {
             <Menu listOfItems={postSetting} />
           </div>
         </div>
-        <p className="text-white mt-2">{tweetData.postText}</p>
+        <p className="text-white mt-2">{tweetData.postContent}</p>
       </div>
       {tweetData.postImg && (
         <div className="mt-4 px-3">

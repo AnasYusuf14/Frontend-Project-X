@@ -8,7 +8,7 @@ const Explore = () => {
       <div className="text-center sticky top-0 bg-[#000000d9] border-b border-[#2f3336]">
         <SearchInput />
 
-        <div className="flex justify-around">
+        <div className="hidden justify-around sm:flex">
           <button className="p-4 text-sm hover:bg-[#333] transition ">
             For You
           </button>

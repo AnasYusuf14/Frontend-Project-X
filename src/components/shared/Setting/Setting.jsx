@@ -63,7 +63,7 @@ export default function Setting() {
 
   return (
     <div className="flex flex-col gap-2 md:flex-row">
-      <div className="grow w-full h-full flex flex-col gap-2 min-w-[450px] max-w-[800px]">
+      <div className="grow w-full h-full flex flex-col gap-2 max-w-[800px]">
         <h1 className="mx-2 my-3 text-2xl font-bold">Settings</h1>
         <div className="flex flex-col gap-2">
           <div className="relative flex items-center">

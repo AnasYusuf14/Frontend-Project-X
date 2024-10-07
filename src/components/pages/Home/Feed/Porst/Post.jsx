@@ -28,12 +28,12 @@ const Post = () => {
   });
   const postValidation = (e) => {
     const input = e.target.value.trim();
-    const hashtags = input.match(/#\w+/g) || [];
+    const hashtags = (input.match(/#\w+/g) || []).map((tag) => tag.slice(1)); 
     if (input !== "") {
       setTweet((prevTweet) => ({
         ...prevTweet,
         postContent: input,
-        hash: [hashtags],
+        hash: hashtags, 
       }));
       setOpacity(true);
     } else {

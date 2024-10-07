@@ -12,7 +12,7 @@ const TweetCard = ({ p }) => {
   return (
     <div
       className="border-b border-[#2f3336] cursor-pointer"
-      onClick={() => naviget(`/home/tweet?id=${p.id}`)}
+      onClick={() => naviget(`/tweet?id=${p.id}`)}
     >
       <div className="text-white rounded-lg shadow-lg py-2 px-4">
         <div className="flex justify-between items-center mb-4">

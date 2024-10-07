@@ -34,7 +34,7 @@ const CreateAccountModal = ({
       if (res.status === 201) {
         toast.success("Account created successfully");
         dispatch(setAuthenticated(true));
-        navigate("/home");
+        navigate("/");
         onClose();
       } else {
         throw new Error("Failed to create account");
@@ -66,10 +66,8 @@ const CreateAccountModal = ({
     "November",
     "December",
   ];
-
   const days = [...Array(31).keys()].map((i) => i + 1);
   const years = [...Array(100).keys()].map((i) => new Date().getFullYear() - i);
-
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-black p-8 rounded-lg shadow-lg w-full max-w-lg h-auto">
