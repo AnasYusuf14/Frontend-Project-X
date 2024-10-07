@@ -16,10 +16,18 @@ const SignInModal = ({ isOpen, onClose, formData, handleInputChange }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.get(`https://jsonplaceholder.typicode.com/users?email=${formData.identifier}`);
+      const identifier = formData.identifier;
+      let res;
+      if (identifier.includes('@')) {
+        // Check if the identifier is an email
+        res = await axios.get(`https://jsonplaceholder.typicode.com/users?email=${identifier}`);
+      } else {
+        // Check if the identifier is a phone number
+        res = await axios.get(`https://jsonplaceholder.typicode.com/users?phone=${identifier}`);
+      }
       const data = res.data;
       if (data.length === 0) {
-        setError('Email not found');
+        setError('Email or phone number not found');
         return;
       }
       toast.success("Signed in successfully");
