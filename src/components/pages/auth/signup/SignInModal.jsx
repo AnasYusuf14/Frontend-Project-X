@@ -19,10 +19,8 @@ const SignInModal = ({ isOpen, onClose, formData, handleInputChange }) => {
       const identifier = formData.identifier;
       let res;
       if (identifier.includes('@')) {
-        // Check if the identifier is an email
         res = await axios.get(`https://jsonplaceholder.typicode.com/users?email=${identifier}`);
       } else {
-        // Check if the identifier is a phone number
         res = await axios.get(`https://jsonplaceholder.typicode.com/users?phone=${identifier}`);
       }
       const data = res.data;
@@ -72,7 +70,7 @@ const SignInModal = ({ isOpen, onClose, formData, handleInputChange }) => {
             name="identifier"
             onChange={(e) => {
               handleInputChange(e);
-              setError(''); // Clear error when user starts typing
+              setError(''); 
             }}
             value={formData.identifier}
           />
