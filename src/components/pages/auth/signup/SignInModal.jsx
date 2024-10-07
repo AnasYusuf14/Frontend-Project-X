@@ -1,9 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
-import XSvg from '../../../svgs/X'; 
+import XSvg from '../../../svgs/X';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setAuthenticated } from '../../../../redux/slices/authSlice';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
-const SignInModal = ({ isOpen, onClose, onSubmit, formData, handleInputChange }) => {
+const SignInModal = ({ isOpen, onClose, formData, handleInputChange }) => {
+  const [error, setError] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.get(`https://jsonplaceholder.typicode.com/users?email=${formData.identifier}`);
+      const data = res.data;
+      if (data.length === 0) {
+        setError('Email not found');
+        return;
+      }
+      toast.success("Signed in successfully");
+      dispatch(setAuthenticated(true));
+      navigate('/home');
+      onClose();
+    } catch (error) {
+      toast.error("Failed to sign in");
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -29,15 +56,19 @@ const SignInModal = ({ isOpen, onClose, onSubmit, formData, handleInputChange })
           <span className="mx-4 text-gray-400">or</span>
           <hr className="flex-grow border-t border-gray-600" />
         </div>
-        <form onSubmit={onSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
-            className="w-full border border-white rounded-lg px-3 py-4 outline-none bg-black text-white"
+            className={`w-full border ${error ? 'border-red-500' : 'border-white'} rounded-lg px-3 py-4 outline-none bg-black text-white`}
             placeholder="Phone, email, or username"
             name="identifier"
-            onChange={handleInputChange}
+            onChange={(e) => {
+              handleInputChange(e);
+              setError(''); // Clear error when user starts typing
+            }}
             value={formData.identifier}
           />
+          {error && <p className="text-red-500">{error}</p>}
           <button
             type="submit"
             className="rounded-full w-full bg-blue-500 text-white py-2 hover:bg-blue-600 transition duration-200"
