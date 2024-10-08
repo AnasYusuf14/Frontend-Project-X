@@ -40,6 +40,8 @@ export default [
       "react-refresh/only-export-components": [
         "warn",
         { allowConstantExport: true },
+        "react-hooks/ruler-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
       ],
     },
   },
