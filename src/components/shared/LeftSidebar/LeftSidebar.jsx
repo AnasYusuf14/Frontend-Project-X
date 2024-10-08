@@ -14,7 +14,6 @@ const LeftSidebar = () => {
   const [menu, setMenu] = useState([]);
   useEffect(() => {
     const filteredMenu = LiftSideLinks.filter((item) => item.show === false);
-    console.log(filteredMenu);
     setMenu(filteredMenu);
   }, []);
   const { t, i18n } = useTranslation();
@@ -26,12 +25,12 @@ const LeftSidebar = () => {
   };
   return (
     <div className="sticky top-0 text-white flex flex-col p-4 text-center xl:text-start relative">
-      <div className="space-y-1 flex flex-col items-center lg:items-start">
-        <div className="xl:ps-3 cursor-pointer ">
-          <a href="/">
-            <FaXTwitter className="text-3xl" />
-          </a>
-        </div>
+      <div className="xl:ps-3 cursor-pointer m-auto xl:m-0">
+        <a href="/">
+          <FaXTwitter className="text-3xl" />
+        </a>
+      </div>
+      <div className="space-y-1 flex flex-col items-center xl:items-start">
         <div className="space-y-1 flex flex-col items-center lg:items-start">
           {LiftSideLinks.map(({ name, iconName: Icon }, index) => {
             if (name === "setting/account") {
@@ -71,12 +70,12 @@ const LeftSidebar = () => {
           {t("Post")}
         </button>
       </div>
-      <div className="flex items-center justify-between mx-auto xl:mx-0 mt-6 	hover:bg-[#1a1a1a] transition rounded-full pe-1 cursor-pointer">
-        <div className="flex items-center ">
+      <div className="flex items-center justify-between mx-auto xl:mx-0 mt-6 hover:bg-[#1a1a1a] transition rounded-full pe-1 cursor-pointer">
+        <div className="flex items-center">
           <img
             src="images/images.jpeg"
             alt="userImg"
-            className="w-[50px] h-[50px] rounded-full me-2 xl:me-2"
+            className="w-[30px] h-[30px] md:w-[50px] md:h-[50px] rounded-full m-auto xl:me-2"
           />
           <div>
             <p className="hidden xl:block">Palestinan</p>
@@ -90,22 +89,25 @@ const LeftSidebar = () => {
           onClick={() => dispatch(toggleMode())}
         />
       </div>
-      <button
-        onClick={() => {
-          dispatch(changeLang("ltr"));
-          changeToEn();
-        }}
-      >
-        EN
-      </button>
-      <button
-        onClick={() => {
-          dispatch(changeLang("rlt"));
-          changeToAr();
-        }}
-      >
-        AR
-      </button>
+      <div className="flex justify-center mt-3">
+        <button
+          className="me-3"
+          onClick={() => {
+            dispatch(changeLang("ltr"));
+            changeToEn();
+          }}
+        >
+          EN
+        </button>
+        <button
+          onClick={() => {
+            dispatch(changeLang("rlt"));
+            changeToAr();
+          }}
+        >
+          AR
+        </button>
+      </div>
     </div>
   );
 };

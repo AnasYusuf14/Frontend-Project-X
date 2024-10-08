@@ -28,8 +28,12 @@ const Menu = ({ listOfItems }) => {
       {isOpen && (
         <div className="more absolute left-0 mt-2 w-56 top-0 bg-black rounded-md py-3">
           <div className="py-1">
-            {listOfItems.map(({ name, iconName: Icon }) => (
-              <MenuItem icon={<Icon className="text-2xl" />} text={t(name)} />
+            {listOfItems.map(({ name, iconName: Icon }, index) => (
+              <MenuItem
+                icon={<Icon className="text-2xl" />}
+                text={t(name)}
+                key={index}
+              />
             ))}
           </div>
         </div>

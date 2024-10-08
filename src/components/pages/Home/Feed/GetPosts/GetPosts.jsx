@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 
 const GetPosts = () => {
   let postsArray = useSelector((state) => state.posts.posts);
-  console.log(postsArray);
   return (
     <div className="space-y-4">
       {postsArray.map((p, index) => (

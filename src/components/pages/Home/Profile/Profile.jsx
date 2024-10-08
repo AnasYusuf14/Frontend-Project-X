@@ -15,8 +15,8 @@ const Profile = () => {
 };
 const ProfileSection = () => {
   const [searchParams] = useSearchParams();
-  const userName = searchParams.get("name");
-  const userData = Users.find((u) => u.username === userName);
+  const userName = searchParams.get("id");
+  const userData = Users.find((u) => u.id === userName);
   console.log(userData);
   const user = useSelector((state) => state.auth);
   return (

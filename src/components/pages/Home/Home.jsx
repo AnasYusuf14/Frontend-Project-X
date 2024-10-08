@@ -7,30 +7,34 @@ const Home = () => {
   const mode = useSelector((state) => state.mode.mode);
   const dir = useSelector((state) => state.dir.dir);
   const location = useLocation();
-  console.log(location.pathname);
+  console.log(location.pathname.replace("/", ""));
   return (
     <div
       dir={dir === "ltr" ? "ltr" : "rtl"}
-      className={`flex min-h-screen ${
+      className={`grid grid-cols-12  min-h-screen ${
         mode ? "bg-white text-black" : "bg-black text-white "
       } text-white xl:px-6 max-w-[1440px] m-auto`}
     >
-      <div className="flex-[.1] xl:flex-[.2]">
+      <div className={`col-span-2 xl:col-span-2`}>
         <LeftSidebar />
       </div>
       <div
-        className={`flex-[.9] ${
-          location === "/setting/account"
-            ? "lg:flex-[.7] xl:flex-[.5]"
-            : "lg:flex-1 xl:flex-[.8]"
-        }  flex border-x border-[#2f3336]`}
+        className={`col-span-10 ${
+          location.pathname.split("/")[1] === "setting" ||
+          location.pathname.replace("/", "") == "Messages" ||
+          location.pathname.replace("/", "") == "Premium"
+            ? "xl:col-span-10"
+            : "lg:col-span-6"
+        } border-x border-[#2f3336]`}
       >
         <Outlet />
       </div>
-      {location == "/setting/account" ? (
-        <div></div>
+      {location.pathname.replace("/", "") == "/setting/account" ||
+      location.pathname.replace("/", "") == "Messages" ||
+      location.pathname.replace("/", "") == "Premium" ? (
+        ""
       ) : (
-        <div className="lg:flex-[.3]">
+        <div className="hidden lg:block lg:col-span-4">
           <RightSidebar />
         </div>
       )}

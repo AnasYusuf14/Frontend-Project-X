@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { posts } from "@/assets/posts";
 import { FaArrowLeft } from "react-icons/fa";
@@ -8,58 +8,75 @@ import { postSetting } from "@/assets/LiftSideLinks";
 import { FaRegComment } from "react-icons/fa";
 import { BiRepost } from "react-icons/bi";
 import { CiHeart } from "react-icons/ci";
-import { CiSaveUp2 } from "react-icons/ci";
-import { CiBookmark } from "react-icons/ci";
+import { CiSaveUp2, CiBookmark } from "react-icons/ci";
 import { FiImage, FiPaperclip, FiSmile, FiMapPin } from "react-icons/fi";
 import { AiOutlineSend } from "react-icons/ai";
 import Comment from "./Comment";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import ReactPlayer from "react-player";
+import {
+  addComment,
+  removeComment,
+  addLike,
+  removeLike,
+} from "@/assets/rtk/features/postSlice";
+
 const Tweet = () => {
+  const user = useSelector((state) => state.auth.user);
   const [searchParams] = useSearchParams();
   const tweetId = searchParams.get("id");
-  // Getting tweets from stor
   const postsArray = useSelector((state) => state.posts.posts);
-  // Getting tweets from post.js
   const tweetData =
     posts.find((p) => p.id === tweetId) ||
     postsArray.find((p) => p.id === tweetId);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [reply, setReply] = useState("");
+  const [comments, setComments] = useState([]);
+  const [like, setLike] = useState(tweetData.likes);
+  const [liked, setLiked] = useState(false);
+  const [subscribe, setSubscribe] = useState(true);
+  const { t } = useTranslation();
+
   if (!tweetData) {
     return <div className="text-white">Tweet not found</div>;
   }
-  const navigate = useNavigate();
+
   let replayInfo = {
-    userName: "Ayman",
-    user: "Ayman384",
+    id: `${Date.now()}`,
+    userName: user.fullName,
+    user: user.username,
     userImg: "images/avatar-04.png",
-    time: "dsad",
-    text: "",
+    time: "0s",
+    text: reply,
   };
-  const [reply, setReply] = useState("");
-  const [comments, setComments] = useState([]);
+
   const handleSubmit = () => {
     if (reply.trim() !== "") {
-      replayInfo.text = reply;
-      setComments([...comments, replayInfo]);
+      dispatch(addComment({ postId: tweetData.id, comment: replayInfo }));
       setReply("");
     }
   };
-  const [like, setLike] = useState(tweetData.likes);
-  const [liked, setLiked] = useState(false);
+
   const handlLike = () => {
     if (!liked) {
       setLike(like + 1);
+      dispatch(addLike(tweetData.id));
     } else {
       setLike(like - 1);
+      dispatch(removeLike(tweetData.id));
     }
+    setLiked(!liked);
   };
-  const [subscribe, setSubscribe] = useState(false);
-  const { t } = useTranslation();
+
   return (
     <div className="flex-1 text-white rounded-lg">
       <div className="p-3">
         <div className="flex items-center mb-3">
-          <FaArrowLeft onClick={() => navigate("/home")} />
+          <FaArrowLeft onClick={() => navigate("/")} />
           <p className="ms-3">{t("post")}</p>
         </div>
       </div>
@@ -68,7 +85,7 @@ const Tweet = () => {
           <div className="flex items-center">
             <img
               className="w-12 h-12 rounded-full me-2 border border-[#2f3336]"
-              src={tweetData.userImg}
+              src={tweetData.userImg || ""}
               alt={tweetData.userName}
             />
             <div>
@@ -78,9 +95,9 @@ const Tweet = () => {
               </p>
             </div>
           </div>
-          <div className="flex items-center relative">
+          <div className="flex items-center relative flex-wrap">
             <button
-              className="bg-white border border-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-full hover:bg-gray-200 me-3 "
+              className="text-sm bg-white border border-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-full hover:bg-gray-200 me-3 "
               onClick={() => setSubscribe(!subscribe)}
             >
               {t(subscribe ? "subscribe" : "unSubscribe")}
@@ -97,6 +114,11 @@ const Tweet = () => {
             src={tweetData.postImg}
             alt="Tweet Media"
           />
+        </div>
+      )}
+      {tweetData.postUrl && (
+        <div className="mt-4 px-3">
+          <ReactPlayer width="100%" url={tweetData.postUrl} />
         </div>
       )}
       <div className="px-3">
@@ -123,10 +145,7 @@ const Tweet = () => {
             className={`flex items-center hover:text-[#E91E63] transition ${
               liked && `text-[#E91E63]`
             }`}
-            onClick={() => {
-              setLiked(!liked);
-              handlLike();
-            }}
+            onClick={handlLike}
           >
             <CiHeart className="me-1 text-xl" />
             <span>{like}</span>
@@ -174,6 +193,9 @@ const Tweet = () => {
           </button>
         </div>
       </div>
+      {comments.map((comment, index) => (
+        <Comment comment={comment} key={index} />
+      ))}
       {tweetData.replies && tweetData.replies.length > 0 && (
         <div className="space-y-2">
           {tweetData.replies.map((reply, index) => (
@@ -181,9 +203,6 @@ const Tweet = () => {
           ))}
         </div>
       )}
-      {comments.map((comment, index) => (
-        <Comment comment={comment} key={index} />
-      ))}
     </div>
   );
 };

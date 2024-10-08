@@ -6,6 +6,7 @@ import { FaRegComment } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Menu from "@/components/shared/MenuItem/MenuItem";
 import { postSetting } from "@/assets/LiftSideLinks";
+import ReactPlayer from "react-player";
 const TweetCard = ({ p }) => {
   const [open, setOpen] = useState(false);
   const naviget = useNavigate();
@@ -32,10 +33,21 @@ const TweetCard = ({ p }) => {
           <Menu listOfItems={postSetting} />
         </div>
         <p className="mb-4">{p.postContent}</p>
-        <div className="bg-black rounded-lg overflow-hidden">
-          <img src={p.postImg} alt="" className="w-full" />
-        </div>
-        <div className="flex items-center justify-between mt-4 text-gray-400">
+        {p.postImg && (
+          <div className="mt-4 px-3">
+            <img
+              className="rounded-lg w-full max-h-[300px] object-contain"
+              src={p.postImg}
+              alt="Tweet Media"
+            />
+          </div>
+        )}
+        {p.postUrl && (
+          <div className="mt-4 px-3">
+            <ReactPlayer width="100%" url={p.postUrl} />
+          </div>
+        )}
+        <div className="flex items-center justify-between mt-4 text-gray-400 flex-wrap">
           <div className="flex items-center space-x-2 cursor-pointer hover:text-[#1d9bf0] transition">
             <FaRegComment size={20} />
             <span>{p.replies.length || "0"}</span>
