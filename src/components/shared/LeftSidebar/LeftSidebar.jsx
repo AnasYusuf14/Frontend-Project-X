@@ -1,58 +1,112 @@
 import { MdOutlineMoreHoriz } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { LiftSideLinks } from "../../../assets/LiftSideLinks/index";
+import { FaXTwitter } from "react-icons/fa6";
+import { useState, useEffect } from "react";
+import "./more.css";
+import Menu from "../MenuItem/MenuItem";
+import { useDispatch } from "react-redux";
+import { toggleMode } from "@/assets/rtk/features/mode";
+import { changeLang } from "@/assets/rtk/features/dir";
+import { useTranslation } from "react-i18next";
 const LeftSidebar = () => {
+  const dispatch = useDispatch();
+  const [menu, setMenu] = useState([]);
+  useEffect(() => {
+    const filteredMenu = LiftSideLinks.filter((item) => item.show === false);
+    console.log(filteredMenu);
+    setMenu(filteredMenu);
+  }, []);
+  const { t, i18n } = useTranslation();
+  const changeToEn = () => {
+    i18n.changeLanguage("en");
+  };
+  const changeToAr = () => {
+    i18n.changeLanguage("ar");
+  };
   return (
-    <div className="text-white h-screen flex flex-col justify-between p-4 text-center xl:text-start">
-      <div className="space-y-1">
-        <button className="text-3xl">X</button>
-        <div className="space-y-1">
+    <div className="sticky top-0 text-white flex flex-col p-4 text-center xl:text-start relative">
+      <div className="space-y-1 flex flex-col items-center lg:items-start">
+        <div className="xl:ps-3 cursor-pointer ">
+          <a href="/">
+            <FaXTwitter className="text-3xl" />
+          </a>
+        </div>
+        <div className="space-y-1 flex flex-col items-center lg:items-start">
           {LiftSideLinks.map(({ name, iconName: Icon }, index) => {
             if (name === "setting/account") {
               return (
                 <Link
                   key={index}
                   to={name}
-                  className="flex items-center space-x-3 p-3 justify-center xl:justify-normal"
+                  className="flex items-center space-x-3 p-2 justify-center xl:justify-normal"
                 >
                   <Icon className="text-2xl" />
                   <span className="hidden xl:block text-xl font-semibold">
-                    Settings
+                    {t("Settings")}
                   </span>
                 </Link>
               );
+            }
+            if (index >= 6) {
+              return;
             } else {
               return (
                 <Link
                   key={index}
                   to={name}
-                  className="flex items-center space-x-3 p-3 justify-center xl:justify-normal	"
+                  className="w-fit flex items-center space-x-3 p-2 justify-center xl:justify-normal	hover:bg-[#1a1a1a] transition rounded-full"
                 >
                   <Icon className="text-2xl" />
                   <p className="hidden xl:block text-xl font-semibold">
-                    {name}
+                    {t(name)}
                   </p>
                 </Link>
               );
             }
           })}
         </div>
-        <button className="hidden xl:block w-full bg-[#1d9bf0] text-white py-4 px-5 rounded-full">
-          Post
+        <Menu listOfItems={menu} />
+        <button className="hidden xl:block w-full bg-[#1d9bf0] py-3 px-5 rounded-full">
+          {t("Post")}
         </button>
       </div>
-      <div className="flex items-center justify-between mx-auto mt-3">
+      <div className="flex items-center justify-between mx-auto xl:mx-0 mt-6 	hover:bg-[#1a1a1a] transition rounded-full pe-1 cursor-pointer">
         <div className="flex items-center ">
-          <div className="bg-red-300 rounded-full h-[50px] w-[50px] xl:me-2"></div>
+          <img
+            src="images/images.jpeg"
+            alt="userImg"
+            className="w-[50px] h-[50px] rounded-full me-2 xl:me-2"
+          />
           <div>
-            <p className="hidden xl:block">abd ayman</p>
-            <p className="hidden xl:block text-[#71767b] text-xs">@ggooggoo</p>
+            <p className="hidden xl:block">Palestinan</p>
+            <p className="hidden xl:block text-[#71767b] text-xs">
+              @palestinan
+            </p>
           </div>
         </div>
-        <MdOutlineMoreHoriz className="hidden xl:block pointer" />
+        <MdOutlineMoreHoriz
+          className="hidden xl:block pointer"
+          onClick={() => dispatch(toggleMode())}
+        />
       </div>
+      <button
+        onClick={() => {
+          dispatch(changeLang("ltr"));
+          changeToEn();
+        }}
+      >
+        EN
+      </button>
+      <button
+        onClick={() => {
+          dispatch(changeLang("rlt"));
+          changeToAr();
+        }}
+      >
+        AR
+      </button>
     </div>
   );
 };
-
 export default LeftSidebar;

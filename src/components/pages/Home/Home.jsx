@@ -1,21 +1,39 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import LeftSidebar from "../../shared/LeftSidebar/LeftSidebar";
 import RightSidebar from "../../shared/RightSidebar/RightSidebar";
-import React, { useContext } from "react";
-import { SidebarContext } from "../../../SidebarContext";
+import { useSelector } from "react-redux";
 
 const Home = () => {
-  // const { isSidebarVisible } = useContext(SidebarContext);
+  const mode = useSelector((state) => state.mode.mode);
+  const dir = useSelector((state) => state.dir.dir);
+  const location = useLocation();
+  console.log(location.pathname);
   return (
-    <div className="flex min-h-screen bg-black text-white mx-auto">
-      <LeftSidebar />
-      <div className="flex-1 flex flex-col lg:flex-row">
-        <div className="flex-1 border border-[#2f3336]">
-          <Outlet />
-        </div>
-        {/* {isSidebarVisible && <RightSidebar />} */}
-        <RightSidebar className="" />
+    <div
+      dir={dir === "ltr" ? "ltr" : "rtl"}
+      className={`flex min-h-screen ${
+        mode ? "bg-white text-black" : "bg-black text-white "
+      } text-white xl:px-6 max-w-[1440px] m-auto`}
+    >
+      <div className="flex-[.1] xl:flex-[.2]">
+        <LeftSidebar />
       </div>
+      <div
+        className={`flex-[.9] ${
+          location === "/setting/account"
+            ? "lg:flex-[.7] xl:flex-[.5]"
+            : "lg:flex-1 xl:flex-[.8]"
+        }  flex border-x border-[#2f3336]`}
+      >
+        <Outlet />
+      </div>
+      {location == "/setting/account" ? (
+        <div></div>
+      ) : (
+        <div className="lg:flex-[.3]">
+          <RightSidebar />
+        </div>
+      )}
     </div>
   );
 };

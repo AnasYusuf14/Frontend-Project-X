@@ -1,19 +1,20 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Home from "./components/pages/Home/Home";
-import Feed from "./components/shared/Feed/Feed";
-import Ads from "./components/shared/Ads/Ads";
-import Bookmarks from "./components/shared/Bookmarks/Bookmarks";
-import Business from "./components/shared/Business/Business";
-import Communities from "./components/shared/Communities/Communities";
-import Create from "./components/shared/Create/Create";
-import Explore from "./components/shared/Explore/Explore";
-import Gork from "./components/shared/Gork/Gork";
-import Jobs from "./components/shared/Jobs/Jobs";
-import Lists from "./components/shared/Lists/Lists";
-import Messages from "./components/shared/Messages/Messages";
-import Notifications from "./components/shared/Notifications/Notifications";
-import Premium from "./components/shared/Premium/Premium";
-import Profile from "./components/shared/Profile/Profile";
+import Feed from "./components/pages/Home/Feed/Feed";
+import Ads from "./components/pages/Home/Ads/Ads";
+import Bookmarks from "./components/pages/Home/Bookmarks/Bookmarks";
+import Business from "./components/pages/Home/Business/Business";
+import Communities from "./components/pages/Home/Communities/Communities";
+import Create from "./components/pages/Home/Create/Create";
+import Explore from "./components/pages/Home/Explore/Explore";
+import Gork from "./components/pages/Home/Gork/Gork";
+import Jobs from "./components/pages/Home/Jobs/Jobs";
+import Lists from "./components/pages/Home/Lists/Lists";
+import Messages from "./components/pages/Home/Messages/Messages";
+import Notifications from "./components/pages/Home/Notifications/Notifications";
+import Premium from "./components/pages/Home/Premium/Premium";
+import Profile from "./components/pages/Home/Profile/Profile";
 import { LiftSideLinks } from "./assets/LiftSideLinks/index";
 import Setting from "./components/shared/Setting/Setting.jsx";
 import AccountListSettings from "./components/shared/Setting/account/AccountSettingsList";
@@ -57,6 +58,9 @@ import Preferences from "./components/shared/Setting/notifications/preferences/P
 import NotificationsInSettings from "./components/shared/Setting/notifications/Notifications.jsx";
 import KeyboardShortcutsPage from "./components/shared/Setting/display_and_language/KeyboardShortcuts";
 import { PostsLoder } from "./utils/postsLoder.js";
+import Tweet from "./components/pages/Home/Tweet/Tweet";
+import SignUpPage from "./components/pages/auth/signup/SignUpPage";
+import Trend from "./components/pages/Home/Trend/Trend";
 const componentMap = {
   Feed,
   Explore,
@@ -72,24 +76,42 @@ const componentMap = {
   Jobs,
   Create,
   Bookmarks,
-  Gork, // Commented out as it is not defined
+  Gork,
 };
 
+const ProtectedRoute = ({ children }) => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  return isAuthenticated ? children : <Navigate to="/signup" />;
+};
 export const router = createBrowserRouter([
   {
+    index: true,
+    path: "signup",
+    element: <SignUpPage />,
+  },
+  {
     path: "/",
-    element: <Home />,
+    element: (
+      <ProtectedRoute>
+        <Home />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true,
         element: <Feed />,
       },
+      {
+        path: "tweet",
+        element: <Tweet />,
+      },
+      {
+        path: "trend",
+        element: <Trend />,
+      },
       ...LiftSideLinks.map(({ name }) => ({
         path: name.toLowerCase(),
         element: componentMap[name] ? componentMap[name]() : null,
-        // loader: () => {
-        //   return PostsLoder();
-        // },
       })),
       {
         path: "setting",
@@ -165,27 +187,27 @@ export const router = createBrowserRouter([
               },
               {
                 path: "audience_media_tagging",
-                element: <AudienceMediaTagging />, // Create this component
+                element: <AudienceMediaTagging />,
               },
               {
                 path: "your_posts",
-                element: <YourPosts />, // Create this component
+                element: <YourPosts />,
               },
               {
                 path: "content_you_see",
-                element: <ContentYouSee />, // Create this component
+                element: <ContentYouSee />,
               },
               {
                 path: "mute_and_block",
-                element: <MuteAndBlock />, // Create this component
+                element: <MuteAndBlock />,
               },
               {
                 path: "direct_messages",
-                element: <DirectMessages />, // Create this component
+                element: <DirectMessages />,
               },
               {
                 path: "spaces",
-                element: <Spaces />, // Create this component
+                element: <Spaces />,
               },
               {
                 path: "discoverability-and-contacts",
@@ -193,23 +215,23 @@ export const router = createBrowserRouter([
               },
               {
                 path: "ads_preferences",
-                element: <AdsPreferences />, // Create this component
+                element: <AdsPreferences />,
               },
               {
                 path: "inferred_identity",
-                element: <InferredIdentity />, // Create this component
+                element: <InferredIdentity />,
               },
               {
                 path: "data_sharing_with_business_partners",
-                element: <DataSharingWithBusinessPartners />, // Create this component
+                element: <DataSharingWithBusinessPartners />,
               },
               {
                 path: "location_information",
-                element: <LocationInformation />, // Create this component
+                element: <LocationInformation />,
               },
               {
                 path: "grok",
-                element: <Grok />, // Create this component
+                element: <Grok />,
               },
             ],
           },
