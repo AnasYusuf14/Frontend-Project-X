@@ -4,7 +4,7 @@ import SettingListItem from "./SettingListItem";
 import { IoSearch } from "react-icons/io5";
 import { useEffect, useState, useContext } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { SidebarContext } from "../../../SidebarContext";
+import { SidebarContext } from "@/SidebarContext.jsx";
 
 export default function Setting() {
   const [selectedItem, setSelectedItem] = useState("Your Account");
