@@ -14,44 +14,28 @@ import {
 import axios from "axios";
 import SignInModal from "./SignInModal";
 import CreateAccountModal from "./CreateAccountModal";
+import { GoogleLogin } from 'react-google-login';
 
 const SignUpPage = () => {
   const dispatch = useDispatch();
   const formData = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const identifier = formData.identifier;
-      let res;
-      if (identifier.includes("@")) {
-        res = await axios.get(
-          `https://jsonplaceholder.typicode.com/users?email=${identifier}`
-        );
-      } else if (/^\d+$/.test(identifier)) {
-        res = await axios.get(
-          `https://jsonplaceholder.typicode.com/users?phone=${identifier}`
-        );
-      } else {
-        res = await axios.get(
-          `https://jsonplaceholder.typicode.com/users?username=${identifier}`
-        );
-      }
-      const data = res.data;
-      if (data.length === 0) throw new Error("User not found");
-      const user = data[0];
-      toast.success("Signed in successfully");
-      dispatch(setAuthenticated(true));
-      dispatch(setUser(user));
-      navigate("/");
-    } catch (error) {
-      toast.error("Failed to sign in");
-    }
-  };
-
   const handleInputChange = (e) => {
     dispatch(setFormData({ [e.target.name]: e.target.value }));
+  };
+
+  const handleGoogleResponse = (response) => {
+    if (response.profileObj) {
+      const { tokenId, profileObj } = response;
+      localStorage.setItem("authToken", tokenId);
+      localStorage.setItem("userProfile", JSON.stringify(profileObj));
+      dispatch(setAuthenticated(true));
+      dispatch(setUser(profileObj));
+      navigate("/"); // Redirect to  home page
+    } else {
+      console.error("Google Sign-In was unsuccessful. Try again later.");
+    }
   };
 
   const isCreateAccountModalOpen = useSelector(
@@ -73,10 +57,23 @@ const SignUpPage = () => {
           Join today.
         </h1>
         <div className="flex flex-col lg:w-2/3 gap-4 mt-8">
-          <button className="btn rounded-full bg-white text-black py-2 w-full flex items-center justify-center gap-2 hover:text-white">
-            <FcGoogle className="w-6 h-6" />
-            Sign in with Google
-          </button>
+          <GoogleLogin
+            clientId="59537962145-g1mha0ii5jqdncd31rrrri3nkuhbhtrv.apps.googleusercontent.com" // Replace with your actual client ID
+            buttonText="Sign in with Google"
+            onSuccess={handleGoogleResponse}
+            onFailure={handleGoogleResponse}
+            cookiePolicy={'single_host_origin'}
+            render={renderProps => (
+              <button
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+                className="btn rounded-full bg-white text-black py-2 w-full flex items-center justify-center gap-2 hover:text-white"
+              >
+                <FcGoogle className="w-6 h-6" />
+                Sign in with Google
+              </button>
+            )}
+          />
           <button className="btn rounded-full bg-black text-white py-2 w-full flex items-center justify-center gap-2">
             <FaApple className="w-6 h-6" />
             Sign up with Apple
