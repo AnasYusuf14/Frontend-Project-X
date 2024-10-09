@@ -18,12 +18,30 @@ const CreateAccountModal = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const validatePhoneNumber = (phone) => {
+    const phoneRegex = /^[0-9]{10}$/; // Adjust the regex according to your phone number format
+    return phoneRegex.test(phone);
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (useEmail && !validateEmail(formData.phone)) {
+      setError("Invalid email address. Please enter a valid email.");
+      return;
+    } else if (!useEmail && !validatePhoneNumber(formData.phone)) {
+      setError("Invalid phone number. Please enter a valid phone number.");
+      return;
+    }
+
     try {
       const newUser = {
         name: formData.name,
-        phone: formData.phone,
+        contact: formData.phone,
         birthday: `${formData.month} ${formData.day}, ${formData.year}`,
       };
 
@@ -47,7 +65,7 @@ const CreateAccountModal = ({
 
   const handleUseEmailInstead = () => {
     setUseEmail(!useEmail);
-    setFormData({ ...formData, phone: useEmail ? "" : "email" });
+    setFormData({ ...formData, phone: "" });
   };
 
   if (!isOpen) return null;
@@ -68,6 +86,7 @@ const CreateAccountModal = ({
   ];
   const days = [...Array(31).keys()].map((i) => i + 1);
   const years = [...Array(100).keys()].map((i) => new Date().getFullYear() - i);
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-black p-8 rounded-lg shadow-lg w-full max-w-lg h-auto">
