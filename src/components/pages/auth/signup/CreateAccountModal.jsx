@@ -28,8 +28,17 @@ const CreateAccountModal = ({
     return emailRegex.test(email);
   };
 
+  const validateName = (name) => {
+    const nameRegex = /^[a-zA-Z\s]+$/; // Only letters and spaces
+    return name && nameRegex.test(name);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateName(formData.name)) {
+      setError("Invalid name. Please enter a valid name.");
+      return;
+    }
     if (useEmail && !validateEmail(formData.phone)) {
       setError("Invalid email address. Please enter a valid email.");
       return;
@@ -65,7 +74,7 @@ const CreateAccountModal = ({
 
   const handleUseEmailInstead = () => {
     setUseEmail(!useEmail);
-    setFormData({ ...formData, phone: "" });
+    setFormData({ ...formData, phone: "" }); // Clear the input field
   };
 
   if (!isOpen) return null;
