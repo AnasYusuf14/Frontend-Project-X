@@ -5,24 +5,29 @@ import { FaXTwitter } from "react-icons/fa6";
 import { useState, useEffect } from "react";
 import "./more.css";
 import Menu from "../MenuItem/MenuItem";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleMode } from "@/assets/rtk/features/mode";
 import { changeLang } from "@/assets/rtk/features/dir";
-import { setAuthenticated } from "@/assets/rtk/features/authSlice"; // Import your action to update authentication state
+import { setAuthenticated, clearUser } from "@/assets/rtk/features/authSlice"; // Import your action to update authentication state
 import { useTranslation } from "react-i18next";
 
 const LeftSidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [menu, setMenu] = useState([]);
+  const user = useSelector((state) => state.auth.user); // Access user data from Redux store
+
   useEffect(() => {
     const filteredMenu = LiftSideLinks.filter((item) => item.show === false);
     setMenu(filteredMenu);
   }, []);
+
   const { t, i18n } = useTranslation();
+
   const changeToEn = () => {
     i18n.changeLanguage("en");
   };
+
   const changeToAr = () => {
     i18n.changeLanguage("ar");
   };
@@ -33,7 +38,7 @@ const LeftSidebar = () => {
     dispatch(setAuthenticated(false)); // Update the authentication state in Redux
     dispatch(clearUser()); // Clear the user profile state in Redux
     navigate("/signup"); // Redirect to the SignUpPage
-  };;
+  };
 
   return (
     <div className="sticky top-0 text-white flex flex-col p-4 text-center xl:text-start relative">
@@ -82,17 +87,20 @@ const LeftSidebar = () => {
           {t("Post")}
         </button>
       </div>
-      <div className="flex items-center justify-between mx-auto xl:mx-0 mt-6 hover:bg-[#1a1a1a] transition rounded-full pe-1 cursor-pointer">
+      <Link
+        to="/profile" // Navigate to the Profile page
+        className="flex items-center justify-between mx-auto xl:mx-0 mt-6 hover:bg-[#1a1a1a] transition rounded-full pe-1 cursor-pointer"
+      >
         <div className="flex items-center">
           <img
-            src="images/images.jpeg"
+            src={user?.imageUrl || 'images/images.jpeg'} // Use user's image or fallback image
             alt="userImg"
             className="w-[30px] h-[30px] md:w-[50px] md:h-[50px] rounded-full m-auto xl:me-2"
           />
           <div>
-            <p className="hidden xl:block">Palestinan</p>
+            <p className="hidden xl:block">{user?.name || 'Palestinan'}</p> {/* Use user's name or fallback name */}
             <p className="hidden xl:block text-[#71767b] text-xs">
-              @palestinan
+              @{user?.username || 'palestinan'} {/* Use user's username or fallback username */}
             </p>
           </div>
         </div>
@@ -100,7 +108,7 @@ const LeftSidebar = () => {
           className="hidden xl:block pointer"
           onClick={() => dispatch(toggleMode())}
         />
-      </div>
+      </Link>
       <div className="flex flex-col items-center mt-3">
         <button
           className="w-full hidden sm:block bg-blue-600 py-3 px-4 rounded-full mb-3 hover:bg-red-700 transition"
