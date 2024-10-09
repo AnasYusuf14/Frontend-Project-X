@@ -1,5 +1,5 @@
 import { MdOutlineMoreHoriz } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LiftSideLinks } from "../../../assets/LiftSideLinks/index";
 import { FaXTwitter } from "react-icons/fa6";
 import { useState, useEffect } from "react";
@@ -8,9 +8,12 @@ import Menu from "../MenuItem/MenuItem";
 import { useDispatch } from "react-redux";
 import { toggleMode } from "@/assets/rtk/features/mode";
 import { changeLang } from "@/assets/rtk/features/dir";
+import { setAuthenticated } from "@/assets/rtk/features/authSlice"; // Import your action to update authentication state
 import { useTranslation } from "react-i18next";
+
 const LeftSidebar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [menu, setMenu] = useState([]);
   useEffect(() => {
     const filteredMenu = LiftSideLinks.filter((item) => item.show === false);
@@ -23,6 +26,15 @@ const LeftSidebar = () => {
   const changeToAr = () => {
     i18n.changeLanguage("ar");
   };
+
+  const handleSignOut = () => {
+    localStorage.removeItem("authToken"); // Clear the token from localStorage
+    localStorage.removeItem("userProfile"); // Clear the user profile from localStorage
+    dispatch(setAuthenticated(false)); // Update the authentication state in Redux
+    dispatch(clearUser()); // Clear the user profile state in Redux
+    navigate("/signup"); // Redirect to the SignUpPage
+  };;
+
   return (
     <div className="sticky top-0 text-white flex flex-col p-4 text-center xl:text-start relative">
       <div className="xl:ps-3 cursor-pointer m-auto xl:m-0">
@@ -54,7 +66,7 @@ const LeftSidebar = () => {
                 <Link
                   key={index}
                   to={name}
-                  className="w-fit flex items-center space-x-3 p-2 justify-center xl:justify-normal	hover:bg-[#1a1a1a] transition rounded-full"
+                  className="w-fit flex items-center space-x-3 p-2 justify-center xl:justify-normal hover:bg-[#1a1a1a] transition rounded-full"
                 >
                   <Icon className="text-2xl" />
                   <p className="hidden xl:block text-xl font-semibold">
@@ -89,26 +101,35 @@ const LeftSidebar = () => {
           onClick={() => dispatch(toggleMode())}
         />
       </div>
-      <div className="flex justify-center mt-3">
+      <div className="flex flex-col items-center mt-3">
         <button
-          className="me-3"
-          onClick={() => {
-            dispatch(changeLang("ltr"));
-            changeToEn();
-          }}
+          className="w-full bg-blue-600 py-3 px-4 rounded-full mb-3 hover:bg-red-700 transition"
+          onClick={handleSignOut}
         >
-          EN
+          {t("Sign Out")}
         </button>
-        <button
-          onClick={() => {
-            dispatch(changeLang("rlt"));
-            changeToAr();
-          }}
-        >
-          AR
-        </button>
+        <div className="flex justify-center">
+          <button
+            className="me-3"
+            onClick={() => {
+              dispatch(changeLang("ltr"));
+              changeToEn();
+            }}
+          >
+            EN
+          </button>
+          <button
+            onClick={() => {
+              dispatch(changeLang("rtl"));
+              changeToAr();
+            }}
+          >
+            AR
+          </button>
+        </div>
       </div>
     </div>
   );
 };
+
 export default LeftSidebar;
