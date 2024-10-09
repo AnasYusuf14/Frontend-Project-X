@@ -29,7 +29,7 @@ const Home = () => {
       >
         <Outlet />
       </div>
-      {location.pathname.replace("/", "") == "/setting/account" ||
+      {location.pathname.split("/").includes("setting") ||
       location.pathname.replace("/", "") == "Messages" ||
       location.pathname.replace("/", "") == "Premium" ? (
         ""
