@@ -93,14 +93,14 @@ const LeftSidebar = () => {
       >
         <div className="flex items-center">
           <img
-            src={user?.imageUrl || 'images/images.jpeg'} // Use user's image or fallback image
+            src={user?.imageUrl || 'images/images.jpeg'} 
             alt="userImg"
             className="w-[30px] h-[30px] md:w-[50px] md:h-[50px] rounded-full m-auto xl:me-2"
           />
           <div>
-            <p className="hidden xl:block">{user?.name || 'Palestinan'}</p> {/* Use user's name or fallback name */}
+            <p className="hidden xl:block">{user?.name || 'Palestinan'}</p> 
             <p className="hidden xl:block text-[#71767b] text-xs">
-              @{user?.username || 'palestinan'} {/* Use user's username or fallback username */}
+              @{user?.username || 'palestinan'} 
             </p>
           </div>
         </div>
