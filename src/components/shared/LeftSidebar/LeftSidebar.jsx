@@ -103,7 +103,7 @@ const LeftSidebar = () => {
       </div>
       <div className="flex flex-col items-center mt-3">
         <button
-          className="w-full bg-blue-600 py-3 px-4 rounded-full mb-3 hover:bg-red-700 transition"
+          className="w-full hidden sm:block bg-blue-600 py-3 px-4 rounded-full mb-3 hover:bg-red-700 transition"
           onClick={handleSignOut}
         >
           {t("Sign Out")}
