@@ -15,6 +15,8 @@ const LeftSidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [menu, setMenu] = useState([]);
+  const [dropdownVisible, setDropdownVisible] = useState(false); // State for dropdown visibility
+  const [isDarkMode, setIsDarkMode] = useState(true); // State for theme
   const user = useSelector((state) => state.auth.user); // Access user data from Redux store
 
   useEffect(() => {
@@ -40,8 +42,17 @@ const LeftSidebar = () => {
     navigate("/signup"); // Redirect to the SignUpPage
   };
 
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+    dispatch(toggleMode()); // Dispatch the action to toggle the mode in Redux
+  };
+
   return (
-    <div className="sticky top-0 text-white flex flex-col p-4 text-center xl:text-start relative">
+    <div className={`sticky top-0 flex flex-col p-4 text-center xl:text-start relative ${isDarkMode ? 'text-white' : 'text-black'}`}>
       <div className="xl:ps-3 cursor-pointer m-auto xl:m-0">
         <a href="/">
           <FaXTwitter className="text-3xl" />
@@ -87,28 +98,46 @@ const LeftSidebar = () => {
           {t("Post")}
         </button>
       </div>
-      <Link
-        to="/profile" // Navigate to the Profile page
-        className="flex items-center justify-between mx-auto xl:mx-0 mt-6 hover:bg-[#1a1a1a] transition rounded-full pe-1 cursor-pointer"
-      >
-        <div className="flex items-center">
+      <div className="flex items-center justify-between mx-auto xl:mx-0 mt-6 hover:bg-[#1a1a1a] transition rounded-full pe-1 cursor-pointer relative">
+        <Link
+          to="/profile" // Navigate to the Profile page
+          className="flex items-center"
+        >
           <img
-            src={user?.imageUrl || 'images/images.jpeg'} 
+            src={user?.imageUrl || 'images/images.jpeg'} // Use user's image or fallback image
             alt="userImg"
             className="w-[30px] h-[30px] md:w-[50px] md:h-[50px] rounded-full m-auto xl:me-2"
           />
           <div>
-            <p className="hidden xl:block">{user?.name || 'Palestinan'}</p> 
+            <p className="hidden xl:block">{user?.name || 'Palestinan'}</p> {/* Use user's name or fallback name */}
             <p className="hidden xl:block text-[#71767b] text-xs">
-              @{user?.username || 'palestinan'} 
+              @{user?.username || 'palestinan'} {/* Use user's username or fallback username */}
             </p>
           </div>
+        </Link>
+        <div className="relative">
+          <MdOutlineMoreHoriz
+            className="hidden xl:block pointer ml-2"
+            onClick={toggleDropdown}
+          />
+          {dropdownVisible && (
+            <div className="absolute right-0 mt-2 w-48 bg-black text-white rounded-md shadow-lg z-10">
+              <button
+                className="block w-full text-left px-4 py-2 hover:bg-gray-700"
+                onClick={handleSignOut}
+              >
+                Sign Out
+              </button>
+              <button
+                className="block w-full text-left px-4 py-2 hover:bg-gray-700"
+                onClick={toggleTheme}
+              >
+                Change Mode
+              </button>
+            </div>
+          )}
         </div>
-        <MdOutlineMoreHoriz
-          className="hidden xl:block pointer"
-          onClick={() => dispatch(toggleMode())}
-        />
-      </Link>
+      </div>
       <div className="flex flex-col items-center mt-3">
         <button
           className="w-full hidden sm:block bg-blue-600 py-3 px-4 rounded-full mb-3 hover:bg-red-700 transition"
